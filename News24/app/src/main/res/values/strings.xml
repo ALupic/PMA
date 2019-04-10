@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">News24</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="articles">
+        <item>Tusk suggests Brexit delay of up to a year</item>
+        <item>Liverpool take control against Porto</item>
+        <item>We went troll hunting in Iceland</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>Politics</item>
+        <item>Sport</item>
+        <item>Travel</item>
+    </string-array>
+</resources>
