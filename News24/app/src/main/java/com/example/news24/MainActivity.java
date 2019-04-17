@@ -1,5 +1,6 @@
 package com.example.news24;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Handler;
@@ -96,5 +97,18 @@ public class MainActivity extends AppCompatActivity
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
         return true;
+    }
+
+    @Override
+        public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if(id == R.id.option_login){
+            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(loginIntent);
+            return false;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
