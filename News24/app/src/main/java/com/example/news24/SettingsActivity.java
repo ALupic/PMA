@@ -26,7 +26,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         boolean notifications = db.notificationsOn(sharedPreferences.getString("username",""));
         notificationsSwitch.setChecked(notifications);
-
+		
+		//System.out.println("TESTIRAM NESTO SAMO");
 
         notificationsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
