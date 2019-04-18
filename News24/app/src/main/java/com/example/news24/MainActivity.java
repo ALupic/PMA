@@ -1,7 +1,9 @@
 package com.example.news24;
 
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -20,10 +22,12 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MainActivity extends AppCompatActivity
-        //implements NavigationView.OnNavigationItemSelectedListener
-        {
-            private static int SPLASH_TIME_OUT = 4000;
+public class MainActivity extends AppCompatActivity { //implements NavigationView.OnNavigationItemSelectedListener
+    private static int SPLASH_TIME_OUT = 4000;
+
+    public static final String MyPREFERENCES = "MyPrefs";
+    SharedPreferences sharedPreferences;
+
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private ViewPager viewPager;
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //INITIALIZE PREFERENCES - THESE ARE USED FOR SESSION PURPOSES
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
@@ -68,6 +74,7 @@ public class MainActivity extends AppCompatActivity
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
     }
 
  /*   @Override
@@ -101,14 +108,64 @@ public class MainActivity extends AppCompatActivity
 
     @Override
         public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
+        //int id = item.getItemId();
+        switch (item.getItemId()){
+            case R.id.option_login:
+                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
+                break;
 
-        if(id == R.id.option_login){
-            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(loginIntent);
-            return false;
+            case R.id.option_settings:
+                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                break;
+            case R.id.option_logout:
+                loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+
+                startActivity(loginIntent);
+                break;
+
+            case R.id.option_register:
+                Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(registerIntent);
+                break;
         }
 
-        return super.onOptionsItemSelected(item);
+//        if(id == R.id.option_login){
+//            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+//            startActivity(loginIntent);
+//            return false;
+//        }
+
+        //return super.onOptionsItemSelected(item);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+
+        MenuItem loginMenu = menu.findItem(R.id.option_login);
+        MenuItem logOutMenu = menu.findItem(R.id.option_logout);
+        MenuItem settingsMenu = menu.findItem(R.id.option_settings);
+        MenuItem registerMenu = menu.findItem(R.id.option_register);
+
+        if(sharedPreferences.getString("username","").equals("")){ //IF THERE IS NO SESSION
+            loginMenu.setVisible(true);
+            registerMenu.setVisible(true);
+            logOutMenu.setVisible(false);
+            settingsMenu.setVisible(false);
+        }
+        else{
+            loginMenu.setVisible(false);
+            registerMenu.setVisible(false);
+            logOutMenu.setVisible(true);
+            settingsMenu.setVisible(true);
+        }
+
+        return true;
     }
 }

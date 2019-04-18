@@ -6,6 +6,13 @@
         android:title="Login"
         app:showAsAction="never"
         />
+
+    <item
+        android:id="@+id/option_register"
+        android:title="Register"
+        app:showAsAction="never"
+        />
+
     <item
         android:id="@+id/option_settings"
         android:title="Settings"
@@ -16,4 +23,10 @@
         android:title="About"
         app:showAsAction="never"
         />
+
+    <item
+        android:id="@+id/option_logout"
+        android:title="Logout"
+        app:showAsAction="never"
+    />
 </menu>
