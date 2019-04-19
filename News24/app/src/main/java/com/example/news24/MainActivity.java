@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity { //implements NavigationVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //INITIALIZE PREFERENCES - THESE ARE USED FOR SESSION PURPOSES
         sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
@@ -65,10 +66,10 @@ public class MainActivity extends AppCompatActivity { //implements NavigationVie
      //   navigationView.setNavigationItemSelectedListener(this);
 
         Resources res = getResources();
-        myListView = findViewById(R.id.fragment_list);
+        myListView = findViewById(R.id.myListView);
         articles = res.getStringArray(R.array.articles);
 
-    //    myListView.setAdapter(new ArrayAdapter<String>(this, R.layout.my_listview_detail, articles));
+        //myListView.setAdapter(new ArrayAdapter<String>(this, R.layout.my_listview_detail, articles));
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
