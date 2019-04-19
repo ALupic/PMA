@@ -37,6 +37,7 @@ public class TheFragment extends Fragment {
             ListView myListView = view.findViewById(R.id.myListView);
             String[] articles = res.getStringArray(R.array.articles);
             String[] categories = res.getStringArray(R.array.categories);
+            String[] images = res.getStringArray(R.array.images);
 
 
   /*
@@ -49,7 +50,7 @@ public class TheFragment extends Fragment {
         myListView.setAdapter(listViewAdapter);
 */
 
-        ItemAdapter itemAdapter = new ItemAdapter(getActivity(), articles, categories);
+        ItemAdapter itemAdapter = new ItemAdapter(getActivity(), articles, categories, images);
         myListView.setAdapter(itemAdapter);
 
 

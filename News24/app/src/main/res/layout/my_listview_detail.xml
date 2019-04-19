@@ -1,34 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/titleTextView"
-        android:layout_width="360dp"
-        android:layout_height="110dp"
+        android:layout_width="361dp"
+        android:layout_height="78dp"
+        android:layout_below="@+id/articleImageView"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="26dp"
-        android:layout_marginLeft="26dp"
-        android:layout_marginTop="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="29dp"
         android:text="Title"
         android:textSize="30sp" />
 
     <TextView
         android:id="@+id/categoryTextView"
-        android:layout_width="352dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/titleTextView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="38dp"
+        android:text="Category"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/articleImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="131dp"
+        android:layout_below="@+id/categoryTextView"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginRight="31dp"
-        android:text="Category"
-        android:textSize="18sp" />
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="29dp"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
 </RelativeLayout>

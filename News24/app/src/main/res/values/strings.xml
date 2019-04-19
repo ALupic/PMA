@@ -24,4 +24,10 @@
         <item>Sport</item>
         <item>Travel</item>
     </string-array>
+
+    <string-array name="images">
+        <item>R.drawable.article1</item>
+        <item>R.drawable.article2</item>
+        <item>R.drawable.article3</item>
+    </string-array>
 </resources>
