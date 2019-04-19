@@ -1,12 +1,14 @@
 package com.example.news24;
 
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -53,6 +55,14 @@ public class TheFragment extends Fragment {
         ItemAdapter itemAdapter = new ItemAdapter(getActivity(), articles, categories, images);
         myListView.setAdapter(itemAdapter);
 
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
+                Intent showArticleActivity = new Intent(view.getContext(), ArticleActivity.class);
+                showArticleActivity.putExtra("com.example.news24.ITEM_INDEX", i);
+                startActivity(showArticleActivity);
+            }
+        });
 
         return view;
     }
