@@ -36,7 +36,10 @@ public class TheFragment extends Fragment {
             Resources res = getResources();
             ListView myListView = view.findViewById(R.id.myListView);
             String[] articles = res.getStringArray(R.array.articles);
+            String[] categories = res.getStringArray(R.array.categories);
 
+
+  /*
         ArrayAdapter<String>listViewAdapter = new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
@@ -44,6 +47,11 @@ public class TheFragment extends Fragment {
         );
 
         myListView.setAdapter(listViewAdapter);
+*/
+
+        ItemAdapter itemAdapter = new ItemAdapter(getActivity(), articles, categories);
+        myListView.setAdapter(itemAdapter);
+
 
         return view;
     }
