@@ -22,6 +22,8 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity { //implements NavigationView.OnNavigationItemSelectedListener
     private static int SPLASH_TIME_OUT = 4000;
 
@@ -34,8 +36,8 @@ public class MainActivity extends AppCompatActivity { //implements NavigationVie
     private ViewPagerAdapter vpAdapter;
     private TabLayout tabLayout;
 
-    ListView myListView;
-    String[] articles;
+//    private ListView myListView;
+//    private String[] articles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +67,15 @@ public class MainActivity extends AppCompatActivity { //implements NavigationVie
      //   NavigationView navigationView = findViewById(R.id.nav_view);
      //   navigationView.setNavigationItemSelectedListener(this);
 
-        Resources res = getResources();
-        myListView = findViewById(R.id.myListView);
-        articles = res.getStringArray(R.array.articles);
 
         //myListView.setAdapter(new ArrayAdapter<String>(this, R.layout.my_listview_detail, articles));
+
+//        Resources res = getResources();
+//        myListView = findViewById(R.id.fragment_list);
+//        articles = res.getStringArray(R.array.articles);
+
+      //  myListView.setAdapter(new ArrayAdapter<String>(this, R.layout.my_listview_detail, articles));
+
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
