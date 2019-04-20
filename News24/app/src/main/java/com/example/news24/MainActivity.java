@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,9 +20,13 @@ import android.support.design.widget.TabLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity { //implements NavigationView.OnNavigationItemSelectedListener
@@ -109,6 +114,7 @@ public class MainActivity extends AppCompatActivity { //implements NavigationVie
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
+
         return true;
     }
 
@@ -116,6 +122,19 @@ public class MainActivity extends AppCompatActivity { //implements NavigationVie
         public boolean onOptionsItemSelected(MenuItem item){
         //int id = item.getItemId();
         switch (item.getItemId()){
+            /*case R.id.option_search:
+                Toast.makeText(MainActivity.this, "You clicked Search", Toast.LENGTH_SHORT).show();
+                View searchView = MenuItemCompat.getActionView(item);
+                searchView.setOnQueryTextListener(new View.OnQueryTextLisener(){
+                    @Override
+                    public boolean onQueryTextChange(String newText){
+                        ArrayList<String> tempList = new ArrayList<>();
+
+                        for(String temp: a)
+                    }
+                });
+                break;*/
+
             case R.id.option_login:
                 Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(loginIntent);
