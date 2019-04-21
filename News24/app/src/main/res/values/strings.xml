@@ -37,4 +37,18 @@
         <item>I voted to remain, but this is just ridiculous. We live in a democratic society.</item>
         <item>Ha! Get rekt Leavers! Were never getting out and  thats a good thing!</item>
     </string-array>
+
+    <string-array name="users">
+        <item>Marko</item>
+        <item>Stefan</item>
+        <item>Aleksandar</item>
+        <item>Isidora</item>
+    </string-array>
+
+    <string-array name="dates">
+        <item>21.12.1995. 15:32</item>
+        <item>21.12.1995. 15:32</item>
+        <item>21.12.1995. 15:32</item>
+        <item>21.12.1995. 15:32</item>
+    </string-array>
 </resources>

@@ -1,48 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/activity_layout"
     android:fitsSystemWindows="true"
     tools:context=".ArticleActivity"
     tools:openDrawer="start">
 
-    <LinearLayout
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        <android.support.constraint.ConstraintLayout
 
-        <include
-            layout="@layout/toolbar_layout"/>
-
-        <TextView
-            android:id="@+id/acTitleTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Title of the Article" />
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="16dp">
 
-        <ListView
-            android:id="@+id/commetListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/acCategoryTextView"
+                android:layout_width="336dp"
+                android:layout_height="33dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Category"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/acTitleTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.135"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/commentText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine" />
+            <include
+                android:id="@+id/include"
+                layout="@layout/toolbar_layout" />
 
-        <Button
-            android:id="@+id/commentBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Post Comment" />
+            <TextView
+                android:id="@+id/acTitleTextView"
+                android:layout_width="369dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="124dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Title of the Article"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.307"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include"
+                tools:ignore="MissingConstraints" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/acContentTextView"
+                android:layout_width="367dp"
+                android:layout_height="185dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/acTitleTextView" />
 
-</android.support.v4.widget.DrawerLayout>
+            <ToggleButton
+                android:id="@+id/acFavoritesToggleButton"
+                android:layout_width="63dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="ToggleButton"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintStart_toEndOf="@+id/goToCommentsBtn"
+                app:layout_constraintTop_toBottomOf="@+id/acContentTextView" />
+
+            <ImageButton
+                android:id="@+id/goToCommentsBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/acContentTextView"
+                app:srcCompat="@android:drawable/sym_action_chat" />
+
+            <ToggleButton
+                android:id="@+id/acLikeToggleButton"
+                android:layout_width="64dp"
+                android:layout_height="53dp"
+                android:layout_marginStart="56dp"
+                android:layout_marginLeft="56dp"
+                android:layout_marginTop="8dp"
+                android:text="ToggleButton"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintStart_toEndOf="@+id/acFavoritesToggleButton"
+                app:layout_constraintTop_toBottomOf="@+id/acContentTextView" />
+
+            <ToggleButton
+                android:id="@+id/acDislikeToggleButton"
+                android:layout_width="67dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="ToggleButton"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintStart_toEndOf="@+id/acLikeToggleButton"
+                app:layout_constraintTop_toBottomOf="@+id/acContentTextView" />
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

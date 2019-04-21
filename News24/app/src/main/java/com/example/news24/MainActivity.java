@@ -73,14 +73,6 @@ public class MainActivity extends AppCompatActivity { //implements NavigationVie
      //   navigationView.setNavigationItemSelectedListener(this);
 
 
-        //myListView.setAdapter(new ArrayAdapter<String>(this, R.layout.my_listview_detail, articles));
-
-//        Resources res = getResources();
-//        myListView = findViewById(R.id.fragment_list);
-//        articles = res.getStringArray(R.array.articles);
-
-      //  myListView.setAdapter(new ArrayAdapter<String>(this, R.layout.my_listview_detail, articles));
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
