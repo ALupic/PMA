@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
+    <include
+        layout="@layout/toolbar_layout"/>
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="118dp"

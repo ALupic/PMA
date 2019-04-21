@@ -1,10 +1,12 @@
 package com.example.news24;
 
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -12,6 +14,7 @@ import android.widget.ToggleButton;
 public class ArticleActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+
 
     ToggleButton acFavoritesToggleButton;
     ToggleButton acLikeToggleButton;
@@ -47,9 +50,26 @@ public class ArticleActivity extends AppCompatActivity {
         TextView acTitleTextView = findViewById(R.id.acTitleTextView);
         acTitleTextView.setText(titleIds[index]);
 
+        //ZORICEV KOD -- samo saljem podatke ka aktivnosti
+
+        ImageButton goToCommentsBtn = findViewById(R.id.goToCommentsBtn);
+        goToCommentsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startIntent = new Intent(getApplicationContext(), CommentActivity.class);
+                startIntent.putExtra("category", "Politics");
+                startIntent.putExtra("title", "Tusk suggests Brexit delay of up to a year");
+
+                startActivity(startIntent);
+            }
+        });
+
+
+        //KRAJ ZORICEVOG KODA
+
+
         TextView acCategoryTextView = findViewById(R.id.acCategoryTextView);
         acCategoryTextView.setText(categoryIds[index]);
-
 
         acFavoritesToggleButton = (ToggleButton) findViewById(R.id.acFavoritesToggleButton);
         acFavoritesToggleButton.setChecked(false);
