@@ -30,4 +30,11 @@
         <item>R.drawable.article2</item>
         <item>R.drawable.article3</item>
     </string-array>
+
+    <string-array name="comments">
+        <item>People feel betrayed!!!</item>
+        <item>I voted to leave! Why are politicians not fulfilling the will of the people!?</item>
+        <item>I voted to remain, but this is just ridiculous. We live in a democratic society.</item>
+        <item>Ha! Get rekt Leavers! Were never getting out and  thats a good thing!</item>
+    </string-array>
 </resources>

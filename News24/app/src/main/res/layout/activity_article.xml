@@ -24,6 +24,25 @@
             android:layout_height="wrap_content"
             android:text="Title of the Article" />
 
+        <ListView
+            android:id="@+id/commetListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/commentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/commentBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Post Comment" />
+
     </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>
