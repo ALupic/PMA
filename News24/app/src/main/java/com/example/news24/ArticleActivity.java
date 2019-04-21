@@ -26,9 +26,9 @@ public class ArticleActivity extends AppCompatActivity {
             "We went troll hunting in Iceland"
     };
     String[] categoryIds = {
-            " cat Tusk ",
-            "cat Liverpool ",
-            "cat We "
+            "Politics",
+            "Sport",
+            "Travel"
     };
 
 
@@ -72,35 +72,35 @@ public class ArticleActivity extends AppCompatActivity {
 
         acFavoritesToggleButton = (ToggleButton) findViewById(R.id.acFavoritesToggleButton);
         acFavoritesToggleButton.setChecked(false);
-        acFavoritesToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.star_grey));
+        acFavoritesToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.star_off));
         acFavoritesToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
-                    acFavoritesToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.star_gold));
+                    acFavoritesToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.star_on));
                 else
-                    acFavoritesToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.star_grey));
+                    acFavoritesToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.star_off));
             }
         });
 
         acLikeToggleButton = (ToggleButton) findViewById(R.id.acLikeToggleButton);
         acLikeToggleButton.setChecked(false);
-        acLikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.like_grey));
+        acLikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.like_off));
 
         acDislikeToggleButton = (ToggleButton) findViewById(R.id.acDislikeToggleButton);
         acDislikeToggleButton.setChecked(false);
-        acDislikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dislike_grey));
+        acDislikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dislike_off));
 
         acLikeToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    acLikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.like_green));
-                    acDislikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dislike_grey));
+                    acLikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.like_on));
+                    acDislikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dislike_off));
                     acDislikeToggleButton.setChecked(false);
 
                 }else
-                    acLikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.like_grey));
+                    acLikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.like_off));
                     }
         });
 
@@ -108,11 +108,11 @@ public class ArticleActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    acDislikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dislike_red));
-                    acLikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.like_grey));
+                    acDislikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dislike_on));
+                    acLikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.like_off));
                     acLikeToggleButton.setChecked(false);
                 }else
-                    acDislikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dislike_grey));
+                    acDislikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dislike_off));
             }
         });
     }
