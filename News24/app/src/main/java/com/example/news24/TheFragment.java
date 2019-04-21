@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,6 +24,7 @@ import java.util.List;
 public class TheFragment extends Fragment {
 
     DatabaseHelper db;
+    private ArrayList<NewsArticle> newsArticles = new ArrayList<NewsArticle>();
 
     public TheFragment() {
         // Required empty public constructor
@@ -34,19 +36,22 @@ public class TheFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_the, container, false);
-//        textView = view.findViewById(R.id.textdisplay);
-//        textView.setText(getArguments().getString("message"));
-            Resources res = getResources();
-        ListView myListView = view.findViewById(R.id.myListView);
-            String[] articles = res.getStringArray(R.array.articles);
-            String[] categories = res.getStringArray(R.array.categories);
-            String[] images = res.getStringArray(R.array.images);
-//        String[] articles = db.
-//        String[] categories;
-//        String[] images;
-        db = new DatabaseHelper(getActivity());
-        db.getArticleTitle();
 
+        Resources res = getResources();
+        ListView myListView = view.findViewById(R.id.myListView);
+
+        db = new DatabaseHelper(getActivity());
+        newsArticles =  db.getNewsArticles();
+
+        String[] articles = new String[newsArticles.size()];
+        String[] categories = new String[newsArticles.size()];
+        String[] images = new String[newsArticles.size()];
+
+        for(int i = 0; i < newsArticles.size(); i++){
+            articles[i] = newsArticles.get(i).getTitle();
+            categories[i] = newsArticles.get(i).getCategory();
+            images[i] = newsArticles.get(i).getImage();
+        }
 
 
   /*

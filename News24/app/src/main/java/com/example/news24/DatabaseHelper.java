@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="register.db";
     public static final String TABLE_NAME="registeruser";
@@ -112,15 +115,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public String[] getArticleTitle (){
+    public ArrayList<NewsArticle> getNewsArticles(){
+
+        ArrayList<NewsArticle> articles = new ArrayList<NewsArticle>();
+
         SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT title FROM newsarticle ORDER BY id ASC;";
+        String query = "SELECT * FROM newsarticle ORDER BY id ASC;";
         Cursor cursor = db.rawQuery(query, null);
         cursor.moveToFirst();
-        System.out.println("AAAAAAAAAAAAA TESTING AAAAAAAAAAAAAAAAAAAAAAA");
-        System.out.println(cursor.getString(0));
+
+        for(int i=0;i<cursor.getCount(); i++){
+            NewsArticle newsArticle = new NewsArticle(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                    cursor.getString(4), cursor.getInt(5), cursor.getInt(6), cursor.getString(7), cursor.getString(8));
+
+            articles.add(newsArticle);
+            System.out.println("TRENUTNI NEWS ARTICLE JE:::::" + newsArticle.getTitle());
+            cursor.moveToNext();
+        }
+//        System.out.println(cursor.getString(0));
+//        cursor.moveToNext();
+//        System.out.println(cursor.getString(0));
+
+        cursor.close();
+        db.close();
 
 
-        return null;
+        return articles;
     }
 }

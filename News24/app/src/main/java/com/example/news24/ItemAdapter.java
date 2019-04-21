@@ -1,6 +1,7 @@
 package com.example.news24;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.Display;
@@ -18,19 +19,29 @@ public class ItemAdapter extends BaseAdapter {
     String[] categories;
     String[] images;
     DatabaseHelper db;
+    Resources resources;
 
-    int[] imageIds = {
-            R.drawable.article1,
-            R.drawable.article2,
-            R.drawable.article3
-    };
+//    int[] imageIds = {
+//            R.drawable.article1,
+//            R.drawable.article2,
+//            R.drawable.article3
+//    };
+
+    int[] imageIds;
 
     public ItemAdapter(Context cx, String[] ar, String[] cat, String[] img){
         articles = ar;
         categories = cat;
         images = img;
         mInflater = (LayoutInflater) cx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        db = new DatabaseHelper(cx);
+        resources = cx.getResources();
+        imageIds = new int[img.length];
+
+        for(int i=0; i<img.length; i++){
+            int resourceId = resources.getIdentifier(img[i], "drawable", cx.getPackageName());
+            imageIds[i] = resourceId;
+        }
+
     }
 
     @Override
@@ -63,15 +74,16 @@ public class ItemAdapter extends BaseAdapter {
         categoryTextView.setText(cat);
         System.out.println("----------------- : ");
         System.out.println(position);
-        //articleImageView.setImageResource()
-        if(position==0){
-            articleImageView.setImageResource(imageIds[0]);
-        }else if(position==1){
-            articleImageView.setImageResource(imageIds[1]);
-        }else{
-            articleImageView.setImageResource(imageIds[2]);
-        }
+        articleImageView.setImageResource(imageIds[position]);
+//        if(position==0){
+//            articleImageView.setImageResource(imageIds[0]);
+//        }else if(position==1){
+//            articleImageView.setImageResource(imageIds[1]);
+//        }else{
+//            articleImageView.setImageResource(imageIds[2]);
+//        }
 
         return v;
     }
+
 }
