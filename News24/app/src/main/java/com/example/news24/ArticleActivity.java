@@ -35,9 +35,10 @@ public class ArticleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_article);
 
         toolbar = findViewById(R.id.toolBar);
+
 //        setSupportActionBar(toolbar);
 //        getSupportActionBar().setTitle(null);
-//
+
 //        getSupportActionBar().setLogo(R.drawable.news_pic);
 
         Intent in = getIntent();
