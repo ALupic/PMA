@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity { //implements NavigationVie
     private ViewPagerAdapter vpAdapter;
     private TabLayout tabLayout;
 
+    DatabaseHelper db;
+
 //    private ListView myListView;
 //    private String[] articles;
 
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity { //implements NavigationVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DatabaseHelper db = new DatabaseHelper(this);
 
         //INITIALIZE PREFERENCES - THESE ARE USED FOR SESSION PURPOSES
         sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);

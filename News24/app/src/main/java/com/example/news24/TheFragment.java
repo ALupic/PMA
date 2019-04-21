@@ -4,6 +4,7 @@ package com.example.news24;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class TheFragment extends Fragment {
 
-    private TextView textView;
+    DatabaseHelper db;
 
     public TheFragment() {
         // Required empty public constructor
@@ -36,10 +37,16 @@ public class TheFragment extends Fragment {
 //        textView = view.findViewById(R.id.textdisplay);
 //        textView.setText(getArguments().getString("message"));
             Resources res = getResources();
-            ListView myListView = view.findViewById(R.id.myListView);
+        ListView myListView = view.findViewById(R.id.myListView);
             String[] articles = res.getStringArray(R.array.articles);
             String[] categories = res.getStringArray(R.array.categories);
             String[] images = res.getStringArray(R.array.images);
+//        String[] articles = db.
+//        String[] categories;
+//        String[] images;
+        db = new DatabaseHelper(getActivity());
+        db.getArticleTitle();
+
 
 
   /*

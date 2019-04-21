@@ -17,6 +17,7 @@ public class ItemAdapter extends BaseAdapter {
     String[] articles;
     String[] categories;
     String[] images;
+    DatabaseHelper db;
 
     int[] imageIds = {
             R.drawable.article1,
@@ -29,6 +30,7 @@ public class ItemAdapter extends BaseAdapter {
         categories = cat;
         images = img;
         mInflater = (LayoutInflater) cx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        db = new DatabaseHelper(cx);
     }
 
     @Override
