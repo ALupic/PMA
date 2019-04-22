@@ -29,7 +29,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity { //implements NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AppCompatActivity
+    implements NavigationView.OnNavigationItemSelectedListener {
     private static int SPLASH_TIME_OUT = 4000;
 
     public static final String MyPREFERENCES = "MyPrefs";
@@ -72,14 +73,15 @@ public class MainActivity extends AppCompatActivity { //implements NavigationVie
         drawerLayout = findViewById(R.id.drawer_layout);
 
         //NEW
-     //   NavigationView navigationView = findViewById(R.id.nav_view);
-     //   navigationView.setNavigationItemSelectedListener(this);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
 
     }
 
@@ -109,6 +111,31 @@ public class MainActivity extends AppCompatActivity { //implements NavigationVie
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
+/*
+        MenuItem menuItem = menu.findItem(R.id.option_search);
+        SearchView searchView = (SearchView) menuItem.getActionView(); // returns the objects of the class that is specified within the actionViewClass field (options_menu.xml)
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) { // gets called with every new input string, newText is the input string
+                ArrayList<AndroidVersion> results = new ArrayList<>();
+
+                for(AndroidVersion x: items){
+                    if(x.versionName.contains(newText))
+                        results.add(x);
+                }
+
+                ((MyAdapter)listView.getAdapter()).update(results); // to refresh the listView
+
+                return false;
+            }
+        });
+  */
 
         return true;
     }
@@ -187,5 +214,22 @@ public class MainActivity extends AppCompatActivity { //implements NavigationVie
         }
 
         return true;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item){
+        int id = item.getItemId();
+
+        if(id==R.id.nav_home){
+            Toast.makeText(this, "You clicked Home", Toast.LENGTH_SHORT).show();
+            Intent i1 = new Intent(MainActivity.this, TheFragment.class);
+            i1.putExtra("value", 1);
+            startActivity(i1);
+        }else if(id==R.id.nav_politics){
+            Toast.makeText(this, "You clicked Politics", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "You clicked something else", Toast.LENGTH_SHORT).show();
+        }
+        return false;
     }
 }

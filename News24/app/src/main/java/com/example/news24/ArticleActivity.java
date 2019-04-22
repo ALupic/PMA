@@ -84,6 +84,8 @@ public class ArticleActivity extends AppCompatActivity {
         //ZORICEV KOD -- samo saljem podatke ka aktivnosti
 
         ImageButton goToCommentsBtn = findViewById(R.id.goToCommentsBtn);
+        //Novo
+        goToCommentsBtn.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.comment_img));
         goToCommentsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
