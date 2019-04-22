@@ -160,4 +160,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return newsArticle;
     }
+
+    public ArrayList<Comment> findCommentsByArticleId(int id){
+        ArrayList<Comment> comments = new ArrayList<Comment>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT * FROM comment WHERE article_id = " + id;
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            Comment comment = new Comment(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
+                    cursor.getInt(4), cursor.getInt(5), cursor.getInt(6));
+            comments.add(comment);
+            cursor.moveToNext();
+        }
+        return comments;
+    }
 }

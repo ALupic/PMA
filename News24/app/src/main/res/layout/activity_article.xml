@@ -35,7 +35,7 @@
 
             <ImageView
                 android:id="@+id/acImgImageView"
-                android:layout_width="399dp"
+                android:layout_width="0dp"
                 android:layout_height="154dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
@@ -49,11 +49,10 @@
                 app:srcCompat="@android:drawable/btn_star" />
 
 
-
             <TextView
                 android:id="@+id/acCategoryTextView"
-                android:layout_width="350dp"
-                android:layout_height="26dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="8dp"
@@ -68,8 +67,8 @@
 
             <TextView
                 android:id="@+id/acTitleTextView"
-                android:layout_width="350dp"
-                android:layout_height="80dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
 
@@ -85,7 +84,7 @@
 
             <TextView
                 android:id="@+id/acContentTextView"
-                android:layout_width="350dp"
+                android:layout_width="0dp"
                 android:layout_height="185dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"

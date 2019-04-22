@@ -8,7 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-public class HomeActivity extends AppCompatActivity {
+public class    HomeActivity extends AppCompatActivity {
 
     private ImageView logo;
     private static int splashTimeOut = 4000;
