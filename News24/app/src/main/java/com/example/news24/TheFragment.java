@@ -4,6 +4,7 @@ package com.example.news24;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TheFragment extends Fragment {
+public class TheFragment extends Fragment  {
 
     DatabaseHelper db;
     private ArrayList<NewsArticle> newsArticles = new ArrayList<NewsArticle>();
@@ -69,9 +71,23 @@ public class TheFragment extends Fragment {
 
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
                 Intent showArticleActivity = new Intent(view.getContext(), ArticleActivity.class);
-                showArticleActivity.putExtra("com.example.news24.ITEM_INDEX", i);
+                int selectedNewsArticleId = adapterView.getId();
+              //  showArticleActivity.putExtra("com.example.news24.ITEM_INDEX", position);
+                int newsArticleId = newsArticles.get(position).getId();
+                NewsArticle newsArticle = db.findNewsArticleById(newsArticleId);
+                showArticleActivity.putExtra("newsArticle", newsArticle);
+                /*showArticleActivity.putExtra("newsArticleTitle", newsArticle.getTitle());
+                showArticleActivity.putExtra("newsArticleCategory", newsArticle.getCategory());
+                showArticleActivity.putExtra("newsArticleContent", newsArticle.getContent());
+                showArticleActivity.putExtra("newsArticleLikes", newsArticle.getLikes());
+                showArticleActivity.putExtra("newsArticleDislikes", newsArticle.getDislikes());
+                showArticleActivity.putExtra("newsArticleImage", newsArticle.getImage());
+                showArticleActivity.putExtra("newsArticleLat", newsArticle.getLat());
+                showArticleActivity.putExtra("newsArticleLongg", newsArticle.getLongg());
+*/
+
                 startActivity(showArticleActivity);
             }
         });

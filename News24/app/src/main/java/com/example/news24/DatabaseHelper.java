@@ -142,4 +142,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return articles;
     }
+
+    public NewsArticle findNewsArticleById(int id){
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "SELECT * FROM newsarticle WHERE id = " + id + " ;";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+
+        NewsArticle newsArticle = new NewsArticle(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                cursor.getString(4), cursor.getInt(5), cursor.getInt(6), cursor.getString(7), cursor.getString(8));
+
+        cursor.close();
+        db.close();
+
+        return newsArticle;
+    }
 }

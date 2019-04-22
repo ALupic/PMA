@@ -1,20 +1,31 @@
 package com.example.news24;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 public class ArticleActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
 
+    DatabaseHelper db;
 
     ToggleButton acFavoritesToggleButton;
     ToggleButton acLikeToggleButton;
@@ -36,6 +47,7 @@ public class ArticleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
+        db = new DatabaseHelper(getParent());
 
         toolbar = findViewById(R.id.toolBar);
 
@@ -45,10 +57,23 @@ public class ArticleActivity extends AppCompatActivity {
 //        getSupportActionBar().setLogo(R.drawable.news_pic);
 
         Intent in = getIntent();
-        int index = in.getIntExtra("com.example.news24.ITEM_INDEX", -1);
+       // int index = in.getIntExtra("com.example.news24.ITEM_INDEX", -1);
+     //   int selectedNewsArticleId = in.getIntExtra("selectedNewsArticleId", -1);
+        NewsArticle newsArticle = (NewsArticle) in.getSerializableExtra("newsArticle");
 
         TextView acTitleTextView = findViewById(R.id.acTitleTextView);
-        acTitleTextView.setText(titleIds[index]);
+        TextView acCategoryTextView = findViewById(R.id.acCategoryTextView);
+        TextView acContentTextView = findViewById(R.id.acContentTextView);
+        ImageView acImgImageView = findViewById(R.id.acImgImageView);
+        //acTitleTextView.setText(titleIds[index]);
+        acTitleTextView.setText(newsArticle.getTitle());
+        acCategoryTextView.setText(newsArticle.getCategory());
+        acContentTextView.setText(newsArticle.getContent());
+        String imgName = newsArticle.getImage();
+        Context c = ArticleActivity.this;
+        Resources res = getResources();
+        int resourceId = res.getIdentifier(imgName, "drawable", c.getPackageName());
+        acImgImageView.setImageResource(resourceId);
 
         //ZORICEV KOD -- samo saljem podatke ka aktivnosti
 
@@ -68,8 +93,6 @@ public class ArticleActivity extends AppCompatActivity {
         //KRAJ ZORICEVOG KODA
 
 
-        TextView acCategoryTextView = findViewById(R.id.acCategoryTextView);
-        acCategoryTextView.setText(categoryIds[index]);
 
         acFavoritesToggleButton = (ToggleButton) findViewById(R.id.acFavoritesToggleButton);
         acFavoritesToggleButton.setChecked(false);
@@ -116,5 +139,9 @@ public class ArticleActivity extends AppCompatActivity {
                     acDislikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dislike_off));
             }
         });
+
     }
+
+
+
 }

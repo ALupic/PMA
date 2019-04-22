@@ -32,6 +32,24 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="16dp">
 
+
+            <ImageView
+                android:id="@+id/acImgImageView"
+                android:layout_width="399dp"
+                android:layout_height="154dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/btn_star" />
+
+
+
             <TextView
                 android:id="@+id/acCategoryTextView"
                 android:layout_width="350dp"
@@ -44,9 +62,9 @@
                 android:text="Category"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.49"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/acImgImageView" />
 
             <TextView
                 android:id="@+id/acTitleTextView"
@@ -128,8 +146,6 @@
                 android:textOn=""
                 app:layout_constraintStart_toEndOf="@+id/acLikeToggleButton"
                 app:layout_constraintTop_toBottomOf="@+id/acContentTextView" />
-
-
 
 
         </android.support.constraint.ConstraintLayout>

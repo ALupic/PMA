@@ -1,6 +1,8 @@
 package com.example.news24;
 
-public class NewsArticle {
+import java.io.Serializable;
+
+public class NewsArticle implements Serializable {
     private int id;
     private String category;
     private String title;
@@ -21,6 +23,10 @@ public class NewsArticle {
         this.dislikes = dislikes;
         this.lat = lat;
         this.longg = longg;
+    }
+
+    public NewsArticle(){
+
     }
 
     public int getId() {
