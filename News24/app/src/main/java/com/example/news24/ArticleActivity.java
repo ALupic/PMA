@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class ArticleActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-
+    NewsArticle newsArticle = new NewsArticle();
     DatabaseHelper db;
 
     ToggleButton acFavoritesToggleButton;
@@ -43,11 +43,12 @@ public class ArticleActivity extends AppCompatActivity {
     };
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
-        db = new DatabaseHelper(getParent());
+        db = new DatabaseHelper(this);
 
         toolbar = findViewById(R.id.toolBar);
 
@@ -59,8 +60,8 @@ public class ArticleActivity extends AppCompatActivity {
         Intent in = getIntent();
        // int index = in.getIntExtra("com.example.news24.ITEM_INDEX", -1);
      //   int selectedNewsArticleId = in.getIntExtra("selectedNewsArticleId", -1);
-        final NewsArticle newsArticle = (NewsArticle) in.getSerializableExtra("newsArticle");
-
+        final NewsArticle na = (NewsArticle) in.getSerializableExtra("newsArticle");
+        newsArticle = na;
         TextView acTitleTextView = findViewById(R.id.acTitleTextView);
         TextView acCategoryTextView = findViewById(R.id.acCategoryTextView);
         TextView acContentTextView = findViewById(R.id.acContentTextView);
@@ -131,29 +132,61 @@ public class ArticleActivity extends AppCompatActivity {
         acDislikeToggleButton.setChecked(false);
         acDislikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dislike_off));
 
+
         acLikeToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                int newsArticleId = newsArticle.getId();
+                int nbrLike = newsArticle.getLikes();
                 if (isChecked){
+
+                    newsArticle = db.likeNewsArticleById(newsArticleId, nbrLike + 1);
+
                     acLikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.like_on));
                     acDislikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dislike_off));
                     acDislikeToggleButton.setChecked(false);
 
-                }else
+                }else {
+
+                    newsArticle = db.likeNewsArticleById(newsArticleId, nbrLike -1);
+
                     acLikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.like_off));
-                    }
+                }
+                TextView acLikeTextView = findViewById(R.id.acLikeTextView);
+                TextView acDisikeTextView = findViewById(R.id.acDislikeTextView);
+                acLikeTextView.setText(String.valueOf(newsArticle.getLikes()));
+                acDisikeTextView.setText(String.valueOf(newsArticle.getDislikes()));
+
+            }
+
         });
 
         acDislikeToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                int newsArticleId = newsArticle.getId();
+                int nbrDislike = newsArticle.getDislikes();
+
                 if (isChecked){
+
+                    newsArticle = db.dislikeNewsArticleById(newsArticleId, nbrDislike + 1);
+
+
                     acDislikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dislike_on));
                     acLikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.like_off));
                     acLikeToggleButton.setChecked(false);
-                }else
+                }else {
+                    newsArticle = db.dislikeNewsArticleById(newsArticleId, nbrDislike -1);
+
                     acDislikeToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dislike_off));
+                }
+                TextView acLikeTextView = findViewById(R.id.acLikeTextView);
+                TextView acDisikeTextView = findViewById(R.id.acDislikeTextView);
+                acLikeTextView.setText(String.valueOf(newsArticle.getLikes()));
+                acDisikeTextView.setText(String.valueOf(newsArticle.getDislikes()));
+
             }
+
         });
 
     }
