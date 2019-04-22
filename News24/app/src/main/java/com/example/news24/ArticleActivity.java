@@ -65,10 +65,16 @@ public class ArticleActivity extends AppCompatActivity {
         TextView acCategoryTextView = findViewById(R.id.acCategoryTextView);
         TextView acContentTextView = findViewById(R.id.acContentTextView);
         ImageView acImgImageView = findViewById(R.id.acImgImageView);
+        TextView acLikeTextView = findViewById(R.id.acLikeTextView);
+        TextView acDisikeTextView = findViewById(R.id.acDislikeTextView);
+
         //acTitleTextView.setText(titleIds[index]);
         acTitleTextView.setText(newsArticle.getTitle());
         acCategoryTextView.setText(newsArticle.getCategory());
         acContentTextView.setText(newsArticle.getContent());
+        acLikeTextView.setText(String.valueOf(newsArticle.getLikes()));
+        acDisikeTextView.setText(String.valueOf(newsArticle.getDislikes()));
+
         String imgName = newsArticle.getImage();
         Context c = ArticleActivity.this;
         Resources res = getResources();
