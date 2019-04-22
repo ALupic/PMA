@@ -264,4 +264,65 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return newsArticle;
     }
 
+
+    public Comment findCommentById(int id){
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "SELECT * FROM comment WHERE id = " + id + " ;";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+
+        Comment comment = new Comment(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
+                cursor.getInt(4), cursor.getString(5), cursor.getInt(6));
+        cursor.close();
+        db.close();
+
+        return comment;
+    }
+
+    public Comment likeCommentById(int id, int nbrLike){
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String update = "Update comment SET likes =" + nbrLike + " WHERE id = " + id + " ;"; //Update registeruser set notifications = n_value where username = 'u_value';
+        db.execSQL(update);
+
+        String query = "SELECT * FROM comment WHERE id = " + id + " ;";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+
+        Comment comment = new Comment(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
+                cursor.getInt(4), cursor.getString(5), cursor.getInt(6));
+
+        cursor.close();
+        db.close();
+        return comment;
+    }
+
+
+    public Comment dislikeCommentById(int id, int nbrDisike){
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String update = "Update comment SET dislikes =" + nbrDisike + " WHERE id = " + id + " ;"; //Update registeruser set notifications = n_value where username = 'u_value';
+        db.execSQL(update);
+
+        String query = "SELECT * FROM comment WHERE id = " + id + " ;";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+
+        Comment comment = new Comment(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
+                cursor.getInt(4), cursor.getString(5), cursor.getInt(6));
+
+        cursor.close();
+        db.close();
+
+        return comment;
+    }
+
+
 }
