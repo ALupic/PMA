@@ -26,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //db.execSQL("CREATE TABLE registeruser (ID INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, notifications INTEGER)");
         db.execSQL("CREATE TABLE registeruser (username TEXT PRIMARY KEY, password TEXT, type INTEGER, notifications INTEGER)");
-        db.execSQL("CREATE TABLE newsarticle (id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, title TEXT, image TEXT, content TEXT, likes INTEGER, dislikes INTEGER, lat TEXT, long TEXT)");
+        db.execSQL("CREATE TABLE newsarticle (id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, title TEXT, image TEXT, content TEXT, likes INTEGER, dislikes INTEGER, lat FLOAT(4,8), long FLOAT(4,8))");
         db.execSQL("CREATE TABLE comment (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT, time DATETIME, likes INTEGER, dislikes INTEGER, user_id TEXT, article_id INTEGER, FOREIGN KEY(user_id) REFERENCES registeruser(username), FOREIGN KEY(article_id) REFERENCES newsarticle(id))");
 
         //INSERT ADMIN USER
@@ -36,12 +36,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO newsarticle VALUES(1, 'Politics', 'Brexit: Donald Tusk suggests \"flexible\" delay of up to a year', " +
                 "'article1', " +
                 "'European Council president Donald Tusk says the EU should consider offering the UK a \"flexible\" delay to Brexit of up to a year, with the option of leaving earlier if a deal is ratified.'," +
-                "250, 2450,'50.8389', '4.3748299999999745')");
+                "250, 2450,-34, 151)");
 
         db.execSQL("INSERT INTO newsarticle VALUES(2, 'Sport', 'Liverpool take control against Porto', " +
                 "'article2', " +
                 "'Liverpool cruise to victory over Porto after Naby Keïtas flying start. Liverpool controlled much of the quarter-final first leg with Naby Keïta and Roberto Firmino on the scoresheet in a dominant first-half display that threatened a repeat of last seasons 5-0 win in the last-16 stage.'," +
-                "240, 201, '41.161758', '41.161758 -8.583933')");
+                "240, 201, 34, 151)");
     }
 
     @Override
@@ -126,7 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         for(int i=0;i<cursor.getCount(); i++){
             NewsArticle newsArticle = new NewsArticle(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                    cursor.getString(4), cursor.getInt(5), cursor.getInt(6), cursor.getString(7), cursor.getString(8));
+                    cursor.getString(4), cursor.getInt(5), cursor.getInt(6), cursor.getFloat(7), cursor.getFloat(8));
 
             articles.add(newsArticle);
             System.out.println("TRENUTNI NEWS ARTICLE JE:::::" + newsArticle.getTitle());
@@ -153,7 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         NewsArticle newsArticle = new NewsArticle(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                cursor.getString(4), cursor.getInt(5), cursor.getInt(6), cursor.getString(7), cursor.getString(8));
+                cursor.getString(4), cursor.getInt(5), cursor.getInt(6), cursor.getFloat(7), cursor.getFloat(8));
 
         cursor.close();
         db.close();

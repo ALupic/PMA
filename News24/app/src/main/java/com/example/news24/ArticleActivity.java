@@ -59,7 +59,7 @@ public class ArticleActivity extends AppCompatActivity {
         Intent in = getIntent();
        // int index = in.getIntExtra("com.example.news24.ITEM_INDEX", -1);
      //   int selectedNewsArticleId = in.getIntExtra("selectedNewsArticleId", -1);
-        NewsArticle newsArticle = (NewsArticle) in.getSerializableExtra("newsArticle");
+        final NewsArticle newsArticle = (NewsArticle) in.getSerializableExtra("newsArticle");
 
         TextView acTitleTextView = findViewById(R.id.acTitleTextView);
         TextView acCategoryTextView = findViewById(R.id.acCategoryTextView);
@@ -91,7 +91,17 @@ public class ArticleActivity extends AppCompatActivity {
 
 
         //KRAJ ZORICEVOG KODA
+        ImageButton goToMapBtn = findViewById(R.id.goToMapBtn);
+        goToMapBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startIntent = new Intent(getApplicationContext(), MapsActivity.class);
+                startIntent.putExtra("lat", newsArticle.getLat());
+                startIntent.putExtra("longg", newsArticle.getLongg());
 
+                startActivity(startIntent);
+            }
+        });
 
 
         acFavoritesToggleButton = (ToggleButton) findViewById(R.id.acFavoritesToggleButton);

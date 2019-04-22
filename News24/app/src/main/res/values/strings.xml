@@ -51,4 +51,5 @@
         <item>21.12.1995. 15:32</item>
         <item>21.12.1995. 15:32</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
 </resources>

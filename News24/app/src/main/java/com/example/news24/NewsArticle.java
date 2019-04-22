@@ -10,10 +10,10 @@ public class NewsArticle implements Serializable {
     private String content;
     private int likes;
     private int dislikes;
-    private String lat;
-    private String longg;
+    private float lat;
+    private float longg;
 
-    public NewsArticle(int id, String category, String title, String image, String content, int likes, int dislikes, String lat, String longg) {
+    public NewsArticle(int id, String category, String title, String image, String content, int likes, int dislikes, float lat, float longg) {
         this.id = id;
         this.category = category;
         this.title = title;
@@ -77,19 +77,19 @@ public class NewsArticle implements Serializable {
         this.dislikes = dislikes;
     }
 
-    public String getLat() {
+    public float getLat() {
         return lat;
     }
 
-    public void setLat(String lat) {
+    public void setLat(float lat) {
         this.lat = lat;
     }
 
-    public String getLongg() {
+    public float getLongg() {
         return longg;
     }
 
-    public void setLongg(String longg) {
+    public void setLongg(float longg) {
         this.longg = longg;
     }
 
