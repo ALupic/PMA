@@ -30,7 +30,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE comment (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT, time DATETIME, likes INTEGER, dislikes INTEGER, user_id TEXT, article_id INTEGER, FOREIGN KEY(user_id) REFERENCES registeruser(username), FOREIGN KEY(article_id) REFERENCES newsarticle(id))");
 
         //INSERT ADMIN USER
-        db.execSQL("INSERT INTO registeruser VALUES ('admin','admin', 1, 0)"); //insert into registeruser values ('admin', 'admin', 1, 0);
+        db.execSQL("INSERT INTO registeruser VALUES ('admin','admin', 1, 0)");
+
+        //INSERT OTHER USERS
+        db.execSQL("INSERT INTO registeruser VALUES ('marko', 'marko', 0, 1)");
+        db.execSQL("INSERT INTO registeruser VALUES ('stefan', 'stefan', 0, 1)");
+        db.execSQL("INSERT INTO registeruser VALUES ('leksa', 'leksa', 0, 1)");
+        db.execSQL("INSERT INTO registeruser VALUES ('isidora', 'isidora', 0, 1)");
 
         //INSERT NEWS ARTICLES
         db.execSQL("INSERT INTO newsarticle VALUES(1, 'Politics', 'Brexit: Donald Tusk suggests \"flexible\" delay of up to a year', " +
@@ -42,6 +48,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "'article2', " +
                 "'Liverpool cruise to victory over Porto after Naby Keïtas flying start. Liverpool controlled much of the quarter-final first leg with Naby Keïta and Roberto Firmino on the scoresheet in a dominant first-half display that threatened a repeat of last seasons 5-0 win in the last-16 stage.'," +
                 "240, 201, 34, 151)");
+
+        //INSERT COMMENTS
+        db.execSQL("INSERT INTO comment VALUES (1, 'People feel betrayed!!!', '15/4/2019 17:04', 139, 52, 'marko', 1)");
+        db.execSQL("INSERT INTO comment VALUES (2, 'I voted to leave! Why are politicians not fulfilling the will of the people!?', '15/4/2019 15:24', 112, 32, 'stefan', 1)");
+        db.execSQL("INSERT INTO comment VALUES (3, 'I voted to remain, but this is just ridiculous. We live in a democratic society.', '15/4/2019 16:02', 187, 112, 'leksa', 1)");
+        db.execSQL("INSERT INTO comment VALUES (4, 'Ha! Get rekt Leavers! Were never getting out and  thats a good thing!', '15/4/2019 16:32', 97, 318, 'isidora', 1)");
+
     }
 
     @Override
@@ -165,16 +178,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Comment> comments = new ArrayList<Comment>();
 
         SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT * FROM comment WHERE article_id = " + id;
+        String query = "SELECT * FROM comment WHERE article_id = " + id + " ORDER BY time DESC";
         Cursor cursor = db.rawQuery(query, null);
         cursor.moveToFirst();
 
         for(int i=0; i<cursor.getCount(); i++){
             Comment comment = new Comment(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
-                    cursor.getInt(4), cursor.getInt(5), cursor.getInt(6));
+                    cursor.getInt(4), cursor.getString(5), cursor.getInt(6));
             comments.add(comment);
+            //System.out.println("DATE JE :::::::::::::: " + cursor.getString(2));
             cursor.moveToNext();
         }
+
+        cursor.close();
+        db.close();
+
         return comments;
+    }
+
+    public RegisteredUser findUserByUsername(String username){
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT * FROM registeruser WHERE username = " + username;
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+        RegisteredUser user = new RegisteredUser(cursor.getString(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3));
+        return  user;
+    }
+
+    public void addComment(Comment comment){
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("content", comment.getContent());
+        contentValues.put("time", comment.getTime());
+        contentValues.put("likes", comment.getLikes());
+        contentValues.put("dislikes", comment.getDislikes());
+        contentValues.put("user_id", comment.getUser_id());
+        contentValues.put("article_id", comment.getArticle_id());
+
+        long res = db.insert("comment", null, contentValues);
+
+        db.close();
+        //id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT, time DATETIME, likes INTEGER, dislikes INTEGER, user_id TEXT, article_id INTEGER
     }
 }

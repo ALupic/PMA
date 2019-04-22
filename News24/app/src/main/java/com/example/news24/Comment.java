@@ -5,19 +5,19 @@ import java.util.Date;
 public class Comment {
     private int id;
     private String content;
-    private Date time;
+    private String time;
     private int likes;
     private int dislikes;
-    private int user_id;
+    private String user_username;
     private int article_id;
 
-    public Comment(int id, String content, String time, int likes, int dislikes, int user_id, int article_id) {
+    public Comment(int id, String content, String time, int likes, int dislikes, String user_id, int article_id) {
         this.id = id;
         this.content = content;
-        this.time = new Date(time);
+        this.time = time;
         this.likes = likes;
         this.dislikes = dislikes;
-        this.user_id = user_id;
+        this.user_username = user_id;
         this.article_id = article_id;
     }
 
@@ -37,11 +37,11 @@ public class Comment {
         this.content = content;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -61,12 +61,12 @@ public class Comment {
         this.dislikes = dislikes;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public String getUser_id() {
+        return user_username;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUser_id(String user_id) {
+        this.user_username = user_id;
     }
 
     public int getArticle_id() {

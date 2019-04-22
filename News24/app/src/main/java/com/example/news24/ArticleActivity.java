@@ -65,10 +65,16 @@ public class ArticleActivity extends AppCompatActivity {
         TextView acCategoryTextView = findViewById(R.id.acCategoryTextView);
         TextView acContentTextView = findViewById(R.id.acContentTextView);
         ImageView acImgImageView = findViewById(R.id.acImgImageView);
+        TextView acLikeTextView = findViewById(R.id.acLikeTextView);
+        TextView acDisikeTextView = findViewById(R.id.acDislikeTextView);
+
         //acTitleTextView.setText(titleIds[index]);
         acTitleTextView.setText(newsArticle.getTitle());
         acCategoryTextView.setText(newsArticle.getCategory());
         acContentTextView.setText(newsArticle.getContent());
+        acLikeTextView.setText(String.valueOf(newsArticle.getLikes()));
+        acDisikeTextView.setText(String.valueOf(newsArticle.getDislikes()));
+
         String imgName = newsArticle.getImage();
         Context c = ArticleActivity.this;
         Resources res = getResources();
@@ -82,8 +88,9 @@ public class ArticleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent startIntent = new Intent(getApplicationContext(), CommentActivity.class);
-                startIntent.putExtra("category", "Politics");
-                startIntent.putExtra("title", "Tusk suggests Brexit delay of up to a year");
+                startIntent.putExtra("category", newsArticle.getCategory());
+                startIntent.putExtra("title", newsArticle.getTitle());
+                startIntent.putExtra("articleID", newsArticle.getId());
 
                 startActivity(startIntent);
             }

@@ -2,6 +2,7 @@ package com.example.news24;
 
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -13,13 +14,26 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class CommentActivity extends AppCompatActivity {
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+public class CommentActivity extends AppCompatActivity implements CommentDialog.NoticeDialogListener{
 
     private ListView commentsListView;
-    private String[] comments;
+    private String[] commentContent;
     private String[] users;
     private String[] time;
+    private int[] likes;
+    private int[] dislikes;
+    private int[] commentID;
+    private int articleId;
+    private ArrayList<Comment> comments;
+
     private Button openDialog;
+    private Button commLikeBtn;
+
+    CommentAdapter commentAdapter;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -33,16 +47,34 @@ public class CommentActivity extends AppCompatActivity {
 
             commCategoryTW.setText(getIntent().getExtras().getString("category"));
             commTitleTW.setText(getIntent().getExtras().getString("title"));
+            articleId = getIntent().getExtras().getInt("articleID");
         }
 
+        DatabaseHelper db = new DatabaseHelper(this);
+        comments = db.findCommentsByArticleId(articleId);
 
-        Resources res = getResources();
         commentsListView = findViewById(R.id.commListView);
-        comments = res.getStringArray(R.array.comments);
-        users = res.getStringArray(R.array.users);
-        time = res.getStringArray(R.array.dates);
 
-        CommentAdapter commentAdapter = new CommentAdapter(this, comments, users, time);
+        commentContent = new String[comments.size()];
+        users = new String[comments.size()];
+        time = new String[comments.size()];
+        likes = new int[comments.size()];
+        dislikes = new int[comments.size()];
+        commentID = new int[comments.size()];
+
+        for(int i=0; i<comments.size(); i++){
+            commentContent[i] = comments.get(i).getContent();
+            users[i] = comments.get(i).getUser_id();
+            time[i] = comments.get(i).getTime();
+            likes[i] = comments.get(i).getLikes();
+            dislikes[i] = comments.get(i).getDislikes();
+            commentID[i] = comments.get(i).getId();
+        }
+
+        TextView numCommTW = findViewById(R.id.numCommTW);
+        numCommTW.setText(Integer.toString(comments.size()));
+
+        commentAdapter = new CommentAdapter(this, commentContent, users, time, likes, dislikes, commentID);
         commentsListView.setAdapter(commentAdapter);
        // setListViewHeightBasedOnChildren(commentsListView);
 
@@ -51,32 +83,46 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CommentDialog commentDialog = new CommentDialog();
+                Bundle bundle = new Bundle();
+                bundle.putInt("articleID", articleId);
+                commentDialog.setArguments(bundle);
                 commentDialog.show(getSupportFragmentManager(), "missiles");
             }
         });
     }
 
-    /**** Method for Setting the Height of the ListView dynamically.
-     **** Hack to fix the issue of not showing all the items of the ListView
-     **** when placed inside a ScrollView  ****/
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        DatabaseHelper db = new DatabaseHelper(this);
+        comments = db.findCommentsByArticleId(articleId);
 
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+        commentsListView = findViewById(R.id.commListView);
 
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
+        commentContent = new String[comments.size()];
+        users = new String[comments.size()];
+        time = new String[comments.size()];
+        likes = new int[comments.size()];
+        dislikes = new int[comments.size()];
+        commentID = new int[comments.size()];
+
+        for(int i=0; i<comments.size(); i++){
+            commentContent[i] = comments.get(i).getContent();
+            users[i] = comments.get(i).getUser_id();
+            time[i] = comments.get(i).getTime();
+            likes[i] = comments.get(i).getLikes();
+            dislikes[i] = comments.get(i).getDislikes();
+            commentID[i] = comments.get(i).getId();
         }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
+
+        TextView numCommTW = findViewById(R.id.numCommTW);
+        numCommTW.setText(Integer.toString(comments.size()));
+
+        commentAdapter = new CommentAdapter(this, commentContent, users, time, likes, dislikes, commentID);
+        commentsListView.setAdapter(commentAdapter);
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
     }
 }
