@@ -221,4 +221,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         //id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT, time DATETIME, likes INTEGER, dislikes INTEGER, user_id TEXT, article_id INTEGER
     }
+
+    public NewsArticle likeNewsArticleById(int id, int nbrLike){
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String update = "Update newsarticle SET likes =" + nbrLike + " WHERE id = " + id + " ;"; //Update registeruser set notifications = n_value where username = 'u_value';
+        db.execSQL(update);
+
+        String query = "SELECT * FROM newsarticle WHERE id = " + id + " ;";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+
+        NewsArticle newsArticle = new NewsArticle(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                cursor.getString(4), cursor.getInt(5), cursor.getInt(6), cursor.getFloat(7), cursor.getFloat(8));
+
+        cursor.close();
+        db.close();
+        return newsArticle;
+    }
+
+
+    public NewsArticle dislikeNewsArticleById(int id, int nbrDisike){
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String update = "Update newsarticle SET dislikes =" + nbrDisike + " WHERE id = " + id + " ;"; //Update registeruser set notifications = n_value where username = 'u_value';
+        db.execSQL(update);
+
+        String query = "SELECT * FROM newsarticle WHERE id = " + id + " ;";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+
+        NewsArticle newsArticle = new NewsArticle(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                cursor.getString(4), cursor.getInt(5), cursor.getInt(6), cursor.getFloat(7), cursor.getFloat(8));
+
+        cursor.close();
+        db.close();
+
+        return newsArticle;
+    }
+
 }
