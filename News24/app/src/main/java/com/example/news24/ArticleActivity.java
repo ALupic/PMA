@@ -2,6 +2,7 @@ package com.example.news24;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 
 public class ArticleActivity extends AppCompatActivity {
 
+    private ArrayList<Favorites> favorites = new ArrayList<Favorites>();
+    private ArrayList<NewsArticle> newsArticlesPrepare = new ArrayList<NewsArticle>();
     private Toolbar toolbar;
     NewsArticle newsArticle = new NewsArticle();
     DatabaseHelper db;
@@ -30,7 +33,7 @@ public class ArticleActivity extends AppCompatActivity {
     ToggleButton acFavoritesToggleButton;
     ToggleButton acLikeToggleButton;
     ToggleButton acDislikeToggleButton;
-
+    SharedPreferences sharedPreferences;
     String[] titleIds = {
             "Tusk suggests Brexit delay of up to a year",
             "Liverpool take control against Porto",
@@ -56,6 +59,10 @@ public class ArticleActivity extends AppCompatActivity {
 //        getSupportActionBar().setTitle(null);
 
 //        getSupportActionBar().setLogo(R.drawable.news_pic);
+
+
+        sharedPreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        final String loggedUsername = sharedPreferences.getString("username","");
 
         Intent in = getIntent();
        // int index = in.getIntExtra("com.example.news24.ITEM_INDEX", -1);
@@ -113,19 +120,51 @@ public class ArticleActivity extends AppCompatActivity {
             }
         });
 
+        newsArticlesPrepare =  new ArrayList<NewsArticle>();
+        favorites = db.getAllFavorites();
+
 
         acFavoritesToggleButton = (ToggleButton) findViewById(R.id.acFavoritesToggleButton);
-        acFavoritesToggleButton.setChecked(false);
-        acFavoritesToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.star_off));
+        //ako postoji ulogovani korisnik proveri za njegovo ime id clanka u bazi sa trenutnim, ako se poklapa cekiraj zvezdicu u suprotnom ostavi
+        //ako na klik cekira zvezdicu ubaci u bazu u suprotnom obrisi iz baze
+        if(loggedUsername !=""){
+            acFavoritesToggleButton.setChecked(false);//ako ga nadjemo promenicemo na true
+            acFavoritesToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.star_off));
+            for(int i = 0; i < favorites.size(); i ++){
+                if(loggedUsername.equals(favorites.get(i).getUser_id())){
+                    //ako su isti stavi ga u listu artikala koje cemo proveravati da li je jedan od njih prikazan
+                    newsArticlesPrepare.add(db.findNewsArticleById(favorites.get(i).getArticle_id()));
+                }
+            }
+            //da li je nas artikal u listi
+            for(int i = 0; i < newsArticlesPrepare.size(); i++) {
+                if(newsArticlesPrepare.get(i).getId() == newsArticle.getId() ){
+                    acFavoritesToggleButton.setChecked(true);
+                    acFavoritesToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.star_on));
+                    break;
+                }
+            }
+
+        }else{
+            acFavoritesToggleButton.setChecked(false);
+            acFavoritesToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.star_off));
+        }
+
+
         acFavoritesToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    acFavoritesToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.star_on));
-                else
+                if (isChecked) {
+                    acFavoritesToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.star_on));
+                    db.addFavorites(newsArticle.getId(), loggedUsername);
+
+                }else {
                     acFavoritesToggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.star_off));
+                    db.deleteFavorites(newsArticle.getId(), loggedUsername);
+                }
             }
         });
+
 
         acLikeToggleButton = (ToggleButton) findViewById(R.id.acLikeToggleButton);
         acLikeToggleButton.setChecked(false);
