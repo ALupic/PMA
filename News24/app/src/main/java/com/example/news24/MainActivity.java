@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
     private TabLayout tabLayout;
 
     DatabaseHelper db;
+    private ArrayList<NewsArticle> newsArticles = new ArrayList<NewsArticle>();
 
 //    private ListView myListView;
 //    private String[] articles;
@@ -111,9 +112,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
-/*
-        MenuItem menuItem = menu.findItem(R.id.option_search);
-        SearchView searchView = (SearchView) menuItem.getActionView(); // returns the objects of the class that is specified within the actionViewClass field (options_menu.xml)
+
+  /*      MenuItem menuItem = menu.findItem(R.id.option_search);
+        SearchView searchView = menuItem.getActionView(); // returns the objects of the class that is specified within the actionViewClass field (options_menu.xml)
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -123,19 +124,22 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean onQueryTextChange(String newText) { // gets called with every new input string, newText is the input string
-                ArrayList<AndroidVersion> results = new ArrayList<>();
+                db = new DatabaseHelper(getApplicationContext());
+                newsArticles =  db.getNewsArticles();
 
-                for(AndroidVersion x: items){
-                    if(x.versionName.contains(newText))
+                ArrayList<NewsArticle> results = new ArrayList<NewsArticle>();
+
+                for(NewsArticle x: newsArticles){
+                    if(x.getTitle().contains(newText))
                         results.add(x);
                 }
 
-                ((MyAdapter)listView.getAdapter()).update(results); // to refresh the listView
+                //((MyAdapter)listView.getAdapter()).update(results); // to refresh the listView
 
                 return false;
             }
         });
-  */
+*/
 
         return true;
     }
@@ -222,9 +226,9 @@ public class MainActivity extends AppCompatActivity
 
         if(id==R.id.nav_home){
             Toast.makeText(this, "You clicked Home", Toast.LENGTH_SHORT).show();
-            Intent i1 = new Intent(MainActivity.this, TheFragment.class);
-            i1.putExtra("value", 1);
-            startActivity(i1);
+            //Intent i1 = new Intent(MainActivity.this, TheFragment.class);
+            //i1.putExtra("value", 1);
+            //startActivity(i1);
         }else if(id==R.id.nav_politics){
             Toast.makeText(this, "You clicked Politics", Toast.LENGTH_SHORT).show();
         }else{
