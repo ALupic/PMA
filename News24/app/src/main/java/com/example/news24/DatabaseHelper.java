@@ -351,4 +351,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return favorites;
     }
 
+    public void addFavorites(int articleId, String username ){
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("user_id", username);
+        contentValues.put("article_id", articleId);
+
+        long res = db.insert("favorites", null, contentValues);
+
+        db.close();
+        //id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT, time DATETIME, likes INTEGER, dislikes INTEGER, user_id TEXT, article_id INTEGER
+    }
+    public void deleteFavorites(int articleId, String username ){
+
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete("favorites","user_id=? and article_id=?",new String[]{username,""+articleId+""});
+        db.close();
+    }
+
+//    public void deleteFavorites(int articleId, String username ){
+//
+//        SQLiteDatabase db = getReadableDatabase();
+//        String query = "DELETE FROM favorites WHERE article_id = " + articleId + " AND user_id = " + username +"  ;";
+//        Cursor cursor = db.rawQuery(query, null);
+//       // cursor.moveToFirst();
+//
+//        //Favorites favorites = new Favorites(cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
+//
+//        cursor.close();
+//        db.close();
+//   }
+
 }
