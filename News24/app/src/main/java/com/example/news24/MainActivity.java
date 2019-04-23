@@ -231,8 +231,18 @@ public class MainActivity extends AppCompatActivity
             //startActivity(i1);
         }else if(id==R.id.nav_politics){
             Toast.makeText(this, "You clicked Politics", Toast.LENGTH_SHORT).show();
+        }else if(id==R.id.nav_favorites) {
+
+            if(sharedPreferences.getString("username","").equals("")){
+                Toast.makeText(this, "Login first", Toast.LENGTH_SHORT).show();
+
+            }else {
+                Toast.makeText(this, "You clicked Favorites", Toast.LENGTH_SHORT).show();
+                Intent favoritesIntent = new Intent(MainActivity.this, FavoritesActivity.class);
+                startActivity(favoritesIntent);
+            }
         }else{
-            Toast.makeText(this, "You clicked something else", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "You clicked something else", Toast.LENGTH_SHORT).show();
         }
         return false;
     }

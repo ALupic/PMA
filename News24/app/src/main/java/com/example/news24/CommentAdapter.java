@@ -20,18 +20,23 @@ public class CommentAdapter extends BaseAdapter {
     private int[] likes;
     private int[] dislikes;
     private int[] commentId;
+    private boolean[] likeButtons;
+    private boolean[] dislikeButtons;
 
     ToggleButton commLikeBtn;
     ToggleButton commDislBtn;
 
 
-    public CommentAdapter(Context cx, String[] commentContent, String[] users, String[] time, int[] likes, int[] dislikes, int[] commentId){
+    public CommentAdapter(Context cx, String[] commentContent, String[] users, String[] time, int[] likes, int[] dislikes, int[] commentId, boolean[] likeBtnPressed, boolean[] dislikeBtnPressed){
         this.commentContent = commentContent;
         this.users = users;
         this.time = time;
         this.likes = likes;
         this.dislikes = dislikes;
         this.commentId = commentId;
+        this.likeButtons = likeBtnPressed;
+        this.dislikeButtons = dislikeBtnPressed;
+
         mInflater = (LayoutInflater) cx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -51,8 +56,8 @@ public class CommentAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View v = mInflater.inflate(R.layout.comment_listview_detaill, null);
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final View v = mInflater.inflate(R.layout.comment_listview_detaill, null);
         DatabaseHelper db = new DatabaseHelper(v.getContext());
 
 
@@ -62,8 +67,8 @@ public class CommentAdapter extends BaseAdapter {
         TextView commTextTW = v.findViewById(R.id.commTextTW);
 
         TextView commIDTW = v.findViewById(R.id.commIDTW);
-        TextView likesTW = v.findViewById(R.id.commLikesTW);
-        TextView dislikesTW = v.findViewById(R.id.commDisLikesTW);
+        final TextView likesTW = v.findViewById(R.id.commLikesTW);
+        final TextView dislikesTW = v.findViewById(R.id.commDisLikesTW);
 
         String comment = commentContent[position];
         String user = users[position];
@@ -71,6 +76,8 @@ public class CommentAdapter extends BaseAdapter {
         String numLikes = Integer.toString(likes[position]);
         String numDislikes = Integer.toString(dislikes[position]);
         String cId = Integer.toString(commentId[position]);
+        boolean likeButtonPressed = likeButtons[position];
+        boolean dislikeButtonPressed = dislikeButtons[position];
 
         userTW.setText(user);
         dateTW.setText(date);
@@ -81,62 +88,50 @@ public class CommentAdapter extends BaseAdapter {
 
        final Comment c = db.findCommentById(commentId[position]);
 
-
-
-//
-//        Button likeBtn = v.findViewById(R.id.commLikeBtn);
-//        likeBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//               // System.out.println("NUM OF LIKES IS :::::::::" + likesTW.getText().toString());
-//            }
-//        });
-//
-//        Button dislikeBtn = v.findViewById(R.id.commDislBtn);
-//
-//
-
         //stele pocetak
         commLikeBtn = (ToggleButton) v.findViewById(R.id.commLikeBtn);
-        commLikeBtn.setChecked(false);
-        commLikeBtn.setBackgroundDrawable(ContextCompat.getDrawable(v.getContext().getApplicationContext(), R.drawable.like_off));
+        commLikeBtn.setChecked(likeButtonPressed);
+        if(!likeButtonPressed)
+            commLikeBtn.setBackgroundDrawable(ContextCompat.getDrawable(v.getContext().getApplicationContext(), R.drawable.like_off));
+        else
+            commLikeBtn.setBackgroundDrawable(ContextCompat.getDrawable(v.getContext().getApplicationContext(), R.drawable.like_on));
 
         commDislBtn = (ToggleButton) v.findViewById(R.id.commDislBtn);
-        commDislBtn.setChecked(false);
-        commDislBtn.setBackgroundDrawable(ContextCompat.getDrawable(v.getContext().getApplicationContext(), R.drawable.dislike_off));
-    int pos =  2;
+        commDislBtn.setChecked(dislikeButtonPressed);
+        if(!dislikeButtonPressed)
+            commDislBtn.setBackgroundDrawable(ContextCompat.getDrawable(v.getContext().getApplicationContext(), R.drawable.dislike_off));
+        else
+            commDislBtn.setBackgroundDrawable(ContextCompat.getDrawable(v.getContext().getApplicationContext(), R.drawable.dislike_on));
 
         commLikeBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                View v = mInflater.inflate(R.layout.comment_listview_detaill, null);
-                TextView commIDTW = v.findViewById(R.id.commIDTW);
                 DatabaseHelper db = new DatabaseHelper(v.getContext());
                 commLikeBtn = (ToggleButton) v.findViewById(R.id.commLikeBtn);
-                commDislBtn = (ToggleButton) v.findViewById(R.id.commDislBtn);
-//                String a = commIDTW.getText().toString();
-//                int id = Integer.parseInt(a);
+                commDislBtn = (ToggleButton) v.findViewById(R.id.commDislBtn);//
 
                 Comment comment = db.findCommentById(c.getId());
 
                 int nbrLike = comment.getLikes();
                 if (isChecked){
-
                     comment = db.likeCommentById(comment.getId(), nbrLike + 1);
+                    likes[position] +=1;
 
                     commLikeBtn.setBackgroundDrawable(ContextCompat.getDrawable(v.getContext().getApplicationContext(), R.drawable.like_on));
+                    likeButtons[position] = true;
+
                     commDislBtn.setBackgroundDrawable(ContextCompat.getDrawable(v.getContext().getApplicationContext(), R.drawable.dislike_off));
+                    dislikeButtons[position] = false;
                     commDislBtn.setChecked(false);
 
                 }else {
 
                     comment = db.likeCommentById(comment.getId(), nbrLike -1);
-
+                    likes[position]-=1;
+                    likeButtons[position] =false;
                     commLikeBtn.setBackgroundDrawable(ContextCompat.getDrawable(v.getContext().getApplicationContext(), R.drawable.like_off));
                 }
-                TextView likesTW = v.findViewById(R.id.commLikesTW);
-                TextView dislikesTW = v.findViewById(R.id.commDisLikesTW);
+
                 likesTW.setText(String.valueOf(comment.getLikes()));
                 dislikesTW.setText(String.valueOf(comment.getDislikes()));
 
@@ -147,33 +142,33 @@ public class CommentAdapter extends BaseAdapter {
         commDislBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                View v = mInflater.inflate(R.layout.comment_listview_detaill, null);
-                TextView commIDTW = v.findViewById(R.id.commIDTW);
                 DatabaseHelper db = new DatabaseHelper(v.getContext());
                 commLikeBtn = (ToggleButton) v.findViewById(R.id.commLikeBtn);
                 commDislBtn = (ToggleButton) v.findViewById(R.id.commDislBtn);
-//                String a = commIDTW.getText().toString();
-//                int id = Integer.parseInt(a);
 
                 Comment comment = db.findCommentById(c.getId());
 
                 int nbrDislike = comment.getDislikes();
+
                 if (isChecked){
 
                     comment = db.dislikeCommentById(comment.getId(), nbrDislike + 1);
+                    dislikes[position] +=1;
 
                     commDislBtn.setBackgroundDrawable(ContextCompat.getDrawable(v.getContext().getApplicationContext(), R.drawable.dislike_on));
+                    dislikeButtons[position] = true;
+
                     commLikeBtn.setBackgroundDrawable(ContextCompat.getDrawable(v.getContext().getApplicationContext(), R.drawable.like_off));
+                    likeButtons[position] = false;
                     commLikeBtn.setChecked(false);
 
                 }else {
 
                     comment = db.dislikeCommentById(comment.getId(), nbrDislike -1);
-
+                    dislikes[position] -=1;
+                    dislikeButtons[position] = false;
                     commDislBtn.setBackgroundDrawable(ContextCompat.getDrawable(v.getContext().getApplicationContext(), R.drawable.dislike_off));
                 }
-                TextView likesTW = v.findViewById(R.id.commLikesTW);
-                TextView dislikesTW = v.findViewById(R.id.commDisLikesTW);
                 likesTW.setText(String.valueOf(comment.getLikes()));
                 dislikesTW.setText(String.valueOf(comment.getDislikes()));
 
