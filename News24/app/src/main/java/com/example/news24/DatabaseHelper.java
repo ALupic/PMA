@@ -28,6 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE registeruser (username TEXT PRIMARY KEY, password TEXT, type INTEGER, notifications INTEGER)");
         db.execSQL("CREATE TABLE newsarticle (id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, title TEXT, image TEXT, content TEXT, likes INTEGER, dislikes INTEGER, lat FLOAT(4,8), long FLOAT(4,8))");
         db.execSQL("CREATE TABLE comment (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT, time DATETIME, likes INTEGER, dislikes INTEGER, user_id TEXT, article_id INTEGER, FOREIGN KEY(user_id) REFERENCES registeruser(username), FOREIGN KEY(article_id) REFERENCES newsarticle(id))");
+        db.execSQL("CREATE TABLE favorites(id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, article_id INTEGER, FOREIGN KEY(user_id) REFERENCES registeruser(username), FOREIGN KEY(article_id) REFERENCES newsarticle(id))");
 
         //INSERT ADMIN USER
         db.execSQL("INSERT INTO registeruser VALUES ('admin','admin', 1, 0)");
@@ -54,6 +55,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO comment VALUES (2, 'I voted to leave! Why are politicians not fulfilling the will of the people!?', '15/4/2019 15:24', 112, 32, 'stefan', 1)");
         db.execSQL("INSERT INTO comment VALUES (3, 'I voted to remain, but this is just ridiculous. We live in a democratic society.', '15/4/2019 16:02', 187, 112, 'leksa', 1)");
         db.execSQL("INSERT INTO comment VALUES (4, 'Ha! Get rekt Leavers! Were never getting out and  thats a good thing!', '15/4/2019 16:32', 97, 318, 'isidora', 1)");
+
+        //INSERT FAVORITES
+        db.execSQL("INSERT INTO favorites VALUES (1,'marko', 1 )");
+        db.execSQL("INSERT INTO favorites VALUES (3,'leksa', 1 )");
+        db.execSQL("INSERT INTO favorites VALUES (4,'leksa', 2 )");
+        db.execSQL("INSERT INTO favorites VALUES (5,'isidora', 2 )");
 
     }
 
