@@ -28,6 +28,8 @@ public class CommentActivity extends AppCompatActivity implements CommentDialog.
     private int[] dislikes;
     private int[] commentID;
     private int articleId;
+    private boolean[] likebBtnPressed;
+    private boolean[] dislikeBtnPressed;
     private ArrayList<Comment> comments;
 
     private Button openDialog;
@@ -61,6 +63,8 @@ public class CommentActivity extends AppCompatActivity implements CommentDialog.
         likes = new int[comments.size()];
         dislikes = new int[comments.size()];
         commentID = new int[comments.size()];
+        likebBtnPressed = new boolean[comments.size()];
+        dislikeBtnPressed = new boolean[comments.size()];
 
         for(int i=0; i<comments.size(); i++){
             commentContent[i] = comments.get(i).getContent();
@@ -69,12 +73,14 @@ public class CommentActivity extends AppCompatActivity implements CommentDialog.
             likes[i] = comments.get(i).getLikes();
             dislikes[i] = comments.get(i).getDislikes();
             commentID[i] = comments.get(i).getId();
+            likebBtnPressed[i] = false;
+            dislikeBtnPressed[i] = false;
         }
 
         TextView numCommTW = findViewById(R.id.numCommTW);
         numCommTW.setText(Integer.toString(comments.size()));
 
-        commentAdapter = new CommentAdapter(this, commentContent, users, time, likes, dislikes, commentID);
+        commentAdapter = new CommentAdapter(this, commentContent, users, time, likes, dislikes, commentID, likebBtnPressed, dislikeBtnPressed);
         commentsListView.setAdapter(commentAdapter);
        // setListViewHeightBasedOnChildren(commentsListView);
 
@@ -104,6 +110,9 @@ public class CommentActivity extends AppCompatActivity implements CommentDialog.
         likes = new int[comments.size()];
         dislikes = new int[comments.size()];
         commentID = new int[comments.size()];
+        likebBtnPressed = new boolean[comments.size()];
+        dislikeBtnPressed = new boolean[comments.size()];
+
 
         for(int i=0; i<comments.size(); i++){
             commentContent[i] = comments.get(i).getContent();
@@ -112,12 +121,14 @@ public class CommentActivity extends AppCompatActivity implements CommentDialog.
             likes[i] = comments.get(i).getLikes();
             dislikes[i] = comments.get(i).getDislikes();
             commentID[i] = comments.get(i).getId();
+            likebBtnPressed[i] = false;
+            dislikeBtnPressed[i] = false;
         }
 
         TextView numCommTW = findViewById(R.id.numCommTW);
         numCommTW.setText(Integer.toString(comments.size()));
 
-        commentAdapter = new CommentAdapter(this, commentContent, users, time, likes, dislikes, commentID);
+        commentAdapter = new CommentAdapter(this, commentContent, users, time, likes, dislikes, commentID, likebBtnPressed, dislikeBtnPressed);
         commentsListView.setAdapter(commentAdapter);
     }
 
