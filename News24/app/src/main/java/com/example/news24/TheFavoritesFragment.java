@@ -23,7 +23,9 @@ public class TheFavoritesFragment extends Fragment  {
 
     DatabaseHelper db;
     private ArrayList<NewsArticle> newsArticles = new ArrayList<NewsArticle>();
-    SharedPreferences sharedPreferences;
+    private ArrayList<NewsArticle> newsArticlesPrepare = new ArrayList<NewsArticle>();
+    private ArrayList<Favorites> favorites = new ArrayList<Favorites>();
+
 
     public TheFavoritesFragment() {
         // Required empty public constructor
@@ -36,15 +38,21 @@ public class TheFavoritesFragment extends Fragment  {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_favorites, container, false);
 
-       Resources res = getResources();
+        Resources res = getResources();
         ListView favoritesListView = view.findViewById(R.id.favoritesListView);
 
-//
-//        sharedPreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-//        String username = sharedPreferences.getString("username","");
+        String loggedUsername = getArguments().getString("loggedUsername");
 
         db = new DatabaseHelper(getActivity());
-        newsArticles =  db.getNewsArticles();
+        newsArticlesPrepare =  db.getNewsArticles();
+        favorites = db.getAllFavorites();
+
+        for(int i = 0; i < favorites.size(); i ++){
+            if(loggedUsername.equals(favorites.get(i).getUser_id())){
+                //ako su isti prikazi ga
+                newsArticles.add(db.findNewsArticleById(favorites.get(i).getArticle_id()));
+            }
+        }
 
         String[] articles = new String[newsArticles.size()];
         String[] categories = new String[newsArticles.size()];

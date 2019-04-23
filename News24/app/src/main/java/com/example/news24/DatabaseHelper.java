@@ -331,5 +331,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return comment;
     }
 
+    public ArrayList<Favorites> getAllFavorites(){
+
+        ArrayList<Favorites> favorites = new ArrayList<Favorites>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT * FROM favorites ORDER BY id ASC;";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+        for(int i=0;i<cursor.getCount(); i++){
+            Favorites favorite = new Favorites(cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
+            favorites.add(favorite);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        db.close();
+
+        return favorites;
+    }
 
 }

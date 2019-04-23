@@ -8,16 +8,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class ViewFavoritesAdapter extends FragmentPagerAdapter {
 
-    public ViewFavoritesAdapter(FragmentManager fm) {
+    private  String loggedUsername;
+
+    public ViewFavoritesAdapter(FragmentManager fm, String loggedUsername) {
         super(fm);
+        this.loggedUsername = loggedUsername;
     }
 
     @Override
     public Fragment getItem(int position) {
+
         TheFavoritesFragment demoFragment = new TheFavoritesFragment();
         position = position + 1;
         Bundle bundle = new Bundle();
         bundle.putString("message", "Fragment :"+position);
+        bundle.putString("loggedUsername", loggedUsername);
         demoFragment.setArguments(bundle);
 
         return demoFragment;
