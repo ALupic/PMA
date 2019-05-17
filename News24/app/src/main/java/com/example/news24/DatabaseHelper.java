@@ -43,12 +43,96 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO newsarticle VALUES(1, 'Politics', 'Brexit: Donald Tusk suggests \"flexible\" delay of up to a year', " +
                 "'article1', " +
                 "'European Council president Donald Tusk says the EU should consider offering the UK a \"flexible\" delay to Brexit of up to a year, with the option of leaving earlier if a deal is ratified.'," +
-                "250, 2450,-34, 151)");
+                "250, 2450, 50.8143, 4.4122)");
 
         db.execSQL("INSERT INTO newsarticle VALUES(2, 'Sport', 'Liverpool take control against Porto', " +
                 "'article2', " +
                 "'Liverpool cruise to victory over Porto after Naby Keïtas flying start. Liverpool controlled much of the quarter-final first leg with Naby Keïta and Roberto Firmino on the scoresheet in a dominant first-half display that threatened a repeat of last seasons 5-0 win in the last-16 stage.'," +
-                "240, 201, 34, 151)");
+                "240, 201, 41.16173, -8.58360)");
+
+        db.execSQL("INSERT INTO newsarticle VALUES(3, 'Travel', 'We went troll hunting in Iceland', " +
+                "'article3', " +
+                "'The majority of Icelanders believe in, or at least refuse to the deny the existence of elves, trolls, and other hidden beings. Cut off from the rest of the world for centuries, Icelanders developed a rich storytelling tradition and stories about elves and hidden people are still part of their heritage today.'," +
+                "90, 17, 64.9631, -19.0208)");
+
+        db.execSQL("INSERT INTO newsarticle VALUES(4, 'Politics', 'Donald Trump''s state visit to the UK set for 3 June', " +
+                "'article4', " +
+                "'US President Donald Trump will make a three-day state visit to the UK from 3 to 5 June, Buckingham Palace has announced.',"+
+                "540, 874, 38.8977, -77.0365)");
+
+        db.execSQL("INSERT INTO newsarticle VALUES(5, 'Entertainment', 'Britney Spears tells fans ''all is well'' after #FreeBritney campaign', " +
+                "'article5', " +
+                "'Britney Spears has reassured fans over her wellbeing following internet speculation about her safety.\n" +
+                "\n" +
+                "The pop star put her career on hold in January and reportedly sought mental health treatment last month.'," +
+                "418, 373, 34.07362, -118.40036)");
+
+        db.execSQL("INSERT INTO newsarticle VALUES(6, 'Technology', 'What happens when AI meets robotics?', " +
+                "'article6', " +
+                "'Researchers in Texas are developing robots that have minds of their own.\n" +
+                "\n" +
+                "The scientists are creating systems that can learn for themselves and be able to operate in the home, the workplace and even on the sports field.'," +
+                "378, 67, 30.2849, -97.7341)");
+
+        db.execSQL("INSERT INTO newsarticle VALUES(7, 'Politics', 'Angela Merkel to quit as CDU party leader', " +
+                "'article7', " +
+                "'German Chancellor Angela Merkel has confirmed she will not run for re-election as its chairwoman in December.\n" +
+                "\n" +
+                "Her decision comes after her party suffered heavy losses in regional elections that threatened the stability of the governing coalition.'," +
+                "420, 467, 52.5202, 13.3730)");
+
+        db.execSQL("INSERT INTO newsarticle VALUES(8, 'Travel', 'The temples that had to be moved', " +
+                "'article8', " +
+                "'If Abu Simbel had not been saved, places like Vienna''s Historic Centre, Cambodia''s Angkor Wat and other Unesco World Heritage sites might only live on in history books.'," +
+                "140, 7, 22.3372, 31.6258)");
+
+        db.execSQL("INSERT INTO newsarticle VALUES(9, 'Business', 'US Treasury Secretary calls big US banks after huge stock market falls', " +
+                "'article9', " +
+                "'US Treasury Secretary Steven Mnuchin has made calls to the heads of the country''s six largest banks, in an unusual move aimed at reassuring investors after big falls in US stocks.'," +
+                "276, 67, 38.5354, -77.2300)");
+
+        db.execSQL("INSERT INTO newsarticle VALUES(10, 'Sport', 'Novak Djokovic''s seven Melbourne titles in pictures', " +
+                "'article10', " +
+                "'After Novak Djokovic claims a historic seventh title at the Australian Open, News takes a look at his successes over the years.\n" +
+                "\n" +
+                "The Serb''s 6-3 6-2 6-3 victory over great rival Rafael Nadal in Sunday''s Melbourne showpiece took him clear of six-time men''s winners Roy Emerson and Roger Federer.'," +
+                "674, 197, -37.8227, 144.9801)");
+
+        db.execSQL("INSERT INTO newsarticle VALUES(11, 'Sport', 'Irish Open: Ryder Cup star Ian Poulter to compete at Lahinch', " +
+                "'article11', " +
+                "'Ian Poulter is the latest high-profile European Tour player to commit to taking part in the 2019 Irish Open.\n" +
+                "\n" +
+                "Poulter, 43, will join major winners Louis Oosthuizen, Danny Willett and Padraig Harrington at Lahinch in July.'," +
+                "72, 16, 55.2784, -7.3942)");
+
+        db.execSQL("INSERT INTO newsarticle VALUES(12, 'Technology', 'Data on 540 million Facebook users exposed', " +
+                "'article12', " +
+                "'Detailed information about more than 540 million Facebook users was left publicly viewable for months, a security firm has found.'," +
+                "157, 244, 37.4848, -122.1484)");
+
+        db.execSQL("INSERT INTO newsarticle VALUES(13, 'Travel', 'Can this ''lost'' tribe save the world?', " +
+                "'article13', " +
+                "'The hidden people of the Sierra Nevada de Santa Marta mountains have emerged from centuries of isolation to help save the world from climate change.'," +
+                "174, 21, 10.8292, -73.6923)");
+
+        db.execSQL("INSERT INTO newsarticle VALUES(14, 'Entertainment', 'Oscars organisers decide against rule changes to restrict streaming films', " +
+                "'article14', " +
+                "'Film streaming services could see continued awards success after the body behind the Oscars voted down calls to tighten its submission process.\n" +
+                "\n" +
+                "Figures including Steven Spielberg have said films that are given only brief cinema runs shouldn''t be nominated.'," +
+                "271, 47, 34.1027, -118.3404)");
+
+        db.execSQL("INSERT INTO newsarticle VALUES(15, 'Technology', 'What happens when AI meets robotics?', " +
+                "'article15', " +
+                "'Researchers in Texas are developing robots that have minds of their own.\n" +
+                "\n" +
+                "The scientists are creating systems that can learn for themselves and be able to operate in the home, the workplace and even on the sports field.'," +
+                "378, 67, 31.96860, -99.90181)");
+
+        db.execSQL("INSERT INTO newsarticle VALUES(16, 'Business', 'Germany''s economy: Should we be worried?', " +
+                "'article16', " +
+                "'There''s no question that the German economy has hit a difficult patch. The widest measure of economic activity, gross domestic product (GDP), declined in the third quarter of last year by 0.2% and failed to grow in the following three months.'," +
+                "140, 29, 52.52001, 13.40495)");
 
         //INSERT COMMENTS
         db.execSQL("INSERT INTO comment VALUES (1, 'People feel betrayed!!!', '15/4/2019 17:04', 139, 52, 'marko', 1)");
