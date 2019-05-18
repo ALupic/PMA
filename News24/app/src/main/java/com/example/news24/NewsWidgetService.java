@@ -3,6 +3,7 @@ package com.example.news24;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -28,7 +29,8 @@ public class NewsWidgetService extends RemoteViewsService {
 
         @Override
         public void onCreate() {
-        //connect with data source
+        //connect to data source
+          //  SystemClock.sleep(3000); //OBRISI POSLE
         }
 
         @Override
@@ -47,9 +49,10 @@ public class NewsWidgetService extends RemoteViewsService {
         }
 
         @Override
-        public RemoteViews getViewAt(int position) {
+        public RemoteViews getViewAt(int position) {//load data from data source
             RemoteViews views = new RemoteViews(context.getPackageName(),R.layout.news_widget_item);
             views.setTextViewText(R.id.titleWidgetTextView,exampleData[position]);// ubaciti iz baze
+       //     SystemClock.sleep(500);
             return views;
         }
 
@@ -65,7 +68,7 @@ public class NewsWidgetService extends RemoteViewsService {
 
         @Override
         public long getItemId(int position) {
-            return 0; // ako zelis posle identifikovati svaki objekat u zavisnosti od pozicije ovo koristi
+            return position; // ako zelis posle identifikovati svaki objekat u zavisnosti od pozicije ovo koristi
         }
 
         @Override

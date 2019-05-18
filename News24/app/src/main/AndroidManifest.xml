@@ -67,7 +67,7 @@
         </receiver>
 
         <service android:name=".NewsWidgetService"
-            android:permission="android.premission.BIND_REMOTEVIEWS"/>
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>
