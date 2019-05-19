@@ -20,6 +20,7 @@ public class ItemAdapter extends BaseAdapter {
     String[] images;
     DatabaseHelper db;
     Resources resources;
+    int[] imageIds;
 
 //    int[] imageIds = {
 //            R.drawable.article1,
@@ -27,7 +28,6 @@ public class ItemAdapter extends BaseAdapter {
 //            R.drawable.article3
 //    };
 
-    int[] imageIds;
 
     public ItemAdapter(Context cx, String[] ar, String[] cat, String[] img){
         articles = ar;

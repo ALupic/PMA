@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.example.news24.MainActivity;
 import com.example.news24.R;
@@ -16,11 +17,14 @@ import com.example.news24.R;
 
 public class NewsAppWidgetProvider extends AppWidgetProvider {
 
+    public static final String ACTION_TOAST = "actionToast";
+    public static final String EXTRA_ITEM_POSITION = "extraItemPosition";
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
-            Intent intent = new Intent(context, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+            Intent buttonIntent = new Intent(context, MainActivity.class);
+            PendingIntent buttonPendingIntent = PendingIntent.getActivity(context, 0, buttonIntent, 0);
 
 
             //novo1 za prikaz blokova
@@ -28,13 +32,35 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
             serviceIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,appWidgetId);
             serviceIntent.setData(Uri.parse(serviceIntent.toUri(Intent.URI_INTENT_SCHEME)));
             //novo1
+
+            //n3za listenner na clanak
+            Intent clickIntent = new Intent(context, NewsAppWidgetProvider.class);
+            clickIntent.setAction(ACTION_TOAST);
+            PendingIntent clickPendingIntent = PendingIntent.getBroadcast(context,0,clickIntent,0);
+
+
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.news_widget);
-            views.setOnClickPendingIntent(R.id.news_widget_button, pendingIntent);
+            views.setOnClickPendingIntent(R.id.news_widget_button, buttonPendingIntent);
             //n1
             views.setRemoteAdapter(R.id.news_widget_stack_view,serviceIntent);
             views.setEmptyView(R.id.news_widget_stack_view,R.id.news_widget_empty_view);
-            //n1
+
+            //n3
+            views.setPendingIntentTemplate(R.id.news_widget_stack_view,clickPendingIntent);
+
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
+
     }
+
+    @Override
+    public void onReceive(Context context, Intent intent){
+        if(ACTION_TOAST.equals(intent.getAction())){
+            int clickedPosition = intent.getIntExtra(EXTRA_ITEM_POSITION,0);
+            Toast.makeText(context, "positoin " + clickedPosition, Toast.LENGTH_SHORT).show();
+        }
+        super.onReceive(context,intent);
+    }
+
+
 }

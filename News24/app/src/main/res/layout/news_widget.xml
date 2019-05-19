@@ -7,9 +7,9 @@
 
     <Button
         android:id="@+id/news_widget_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Press me" />
+        android:layout_width="246dp"
+        android:layout_height="49dp"
+        android:background="@drawable/news_large" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -27,10 +27,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/darker_gray"
-            android:text="Empty"
             android:gravity="center"
+            android:text="Witing for article to load..."
             android:textColor="@android:color/white"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </FrameLayout>
 </LinearLayout>
