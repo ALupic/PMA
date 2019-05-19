@@ -19,6 +19,7 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
 
     public static final String ACTION_TOAST = "actionToast";
     public static final String EXTRA_ITEM_POSITION = "extraItemPosition";
+    DatabaseHelper db;
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -56,11 +57,23 @@ public class NewsAppWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent){
         if(ACTION_TOAST.equals(intent.getAction())){
+            db = new DatabaseHelper(context);
             int clickedPosition = intent.getIntExtra(EXTRA_ITEM_POSITION,0);
-            Toast.makeText(context, "positoin " + clickedPosition, Toast.LENGTH_SHORT).show();
+            int articleId = intent.getIntExtra("articleId",0);
+
+
+            Intent showArticleActivity = new Intent(context, ArticleActivity.class);
+            NewsArticle newsArticle = db.findNewsArticleById(articleId);
+            showArticleActivity.putExtra("newsArticle", newsArticle);
+            showArticleActivity.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(showArticleActivity);
+
+
+
+
+           // Toast.makeText(context, "positoin " + clickedPosition, Toast.LENGTH_SHORT).show();
         }
         super.onReceive(context,intent);
+
     }
-
-
 }

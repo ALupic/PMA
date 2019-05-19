@@ -72,12 +72,14 @@ public class TheFragment extends Fragment  {
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
+
                 Intent showArticleActivity = new Intent(view.getContext(), ArticleActivity.class);
-                int selectedNewsArticleId = adapterView.getId();
-              //  showArticleActivity.putExtra("com.example.news24.ITEM_INDEX", position);
                 int newsArticleId = newsArticles.get(position).getId();
                 NewsArticle newsArticle = db.findNewsArticleById(newsArticleId);
                 showArticleActivity.putExtra("newsArticle", newsArticle);
+
+                int selectedNewsArticleId = adapterView.getId();
+                //  showArticleActivity.putExtra("com.example.news24.ITEM_INDEX", position);
                 /*showArticleActivity.putExtra("newsArticleTitle", newsArticle.getTitle());
                 showArticleActivity.putExtra("newsArticleCategory", newsArticle.getCategory());
                 showArticleActivity.putExtra("newsArticleContent", newsArticle.getContent());

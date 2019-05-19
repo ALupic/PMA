@@ -72,15 +72,17 @@ public class NewsWidgetService extends RemoteViewsService {
         public RemoteViews getViewAt(int position) {//load data from data source
 
             newsArticles =  db.getNewsArticles();
-
+            int[] ids = new int[newsArticles.size()];
             String[] articles = new String[newsArticles.size()];
             String[] categories = new String[newsArticles.size()];
             String[] images = new String[newsArticles.size()];
 
             for(int i = 0; i < newsArticles.size(); i++){
+                ids[i] = newsArticles.get(i).getId();
                 articles[i] = newsArticles.get(i).getTitle();
                 categories[i] = newsArticles.get(i).getCategory();
                 images[i] = newsArticles.get(i).getImage();
+
             }
 
             RemoteViews views = new RemoteViews(context.getPackageName(),R.layout.news_widget_item);
@@ -96,6 +98,7 @@ public class NewsWidgetService extends RemoteViewsService {
             views.setImageViewResource(R.id.articleWidgetImageView,imageIds[position]);
             Intent fillIntent = new Intent();
             fillIntent.putExtra(NewsAppWidgetProvider.EXTRA_ITEM_POSITION, position);
+            fillIntent.putExtra("articleId", ids[position]);
             //ovde radimo custom ostalih data kada ubacimo ceo clanak
             views.setOnClickFillInIntent(R.id.widgetRelativeLayout, fillIntent);
 
