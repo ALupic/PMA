@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.design.widget.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, 1);
     }
 
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         //db.execSQL("CREATE TABLE registeruser (ID INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, notifications INTEGER)");
@@ -31,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE comment (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT, time DATETIME, likes INTEGER, dislikes INTEGER, user_id TEXT, article_id INTEGER, FOREIGN KEY(user_id) REFERENCES registeruser(username), FOREIGN KEY(article_id) REFERENCES newsarticle(id))");
         db.execSQL("CREATE TABLE favorites(id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, article_id INTEGER, FOREIGN KEY(user_id) REFERENCES registeruser(username), FOREIGN KEY(article_id) REFERENCES newsarticle(id))");
         //db.execSQL("CREATE TABLE category (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, article_id INTEGER, FOREIGN KEY(article_id) REFERENCES newsarticle(id))");
-        db.execSQL("CREATE TABLE category (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT)");
+        db.execSQL("CREATE TABLE category (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, selected INTEGER)");
 
 
         //INSERT ADMIN USER
@@ -152,13 +155,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         //INSERT CATEGORY za sada se ne koristi
-        db.execSQL("INSERT INTO category VALUES (0,'Home')");
-        db.execSQL("INSERT INTO category VALUES (1,'Sport')");
-        db.execSQL("INSERT INTO category VALUES (2,'Politics')");
-        db.execSQL("INSERT INTO category VALUES (3,'Travel' )");
-        db.execSQL("INSERT INTO category VALUES (4,'Technology' )");
-        db.execSQL("INSERT INTO category VALUES (5,'Entertainment' )");
-        db.execSQL("INSERT INTO category VALUES (6,'Business' )");
+        db.execSQL("INSERT INTO category VALUES (1,'Home', 1)");
+        db.execSQL("INSERT INTO category VALUES (2,'Sport', 0)");
+        db.execSQL("INSERT INTO category VALUES (3,'Politics', 0)");
+        db.execSQL("INSERT INTO category VALUES (4,'Travel', 0)");
+        db.execSQL("INSERT INTO category VALUES (5,'Technology', 0 )");
+        db.execSQL("INSERT INTO category VALUES (6,'Entertainment', 0 )");
+        db.execSQL("INSERT INTO category VALUES (7,'Business', 0 )");
 
 
 
@@ -497,7 +500,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         for(int i=0;i<cursor.getCount(); i++){
-            Category category = new Category(cursor.getInt(0), cursor.getString(1));
+            Category category = new Category(cursor.getInt(0), cursor.getString(1),cursor.getInt(2));
 
             categories.add(category);
             //System.out.println("Categorty ->" + category.getTitle());
@@ -523,11 +526,82 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
 
-        Category category = new Category(cursor.getInt(0), cursor.getString(1));
+        Category category = new Category(cursor.getInt(0), cursor.getString(1),cursor.getInt(2));
 
         cursor.close();
         db.close();
 
         return category;
     }
+
+    public void unselectAll(){
+        SQLiteDatabase db = getReadableDatabase();
+        String update = "Update category SET selected =" + 0 + " ;";
+        db.execSQL(update);
+
+        db.close();
+    }
+
+    public Category selectCategory(int id){
+        unselectAll();
+        SQLiteDatabase db = getReadableDatabase();
+
+        String update = "Update category SET selected =" + 1 + " WHERE id = " + id + " ;";
+        db.execSQL(update);
+
+        String query = "SELECT * FROM category WHERE id = " + id + " ;";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+
+        Category category = new Category(cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
+
+        cursor.close();
+        db.close();
+        return category;
+    }
+
+    public Category getSelectedCategory(){
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "SELECT * FROM category WHERE selected = " + 1 + " ;";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+
+        Category category = new Category(cursor.getInt(0), cursor.getString(1),cursor.getInt(2));
+
+        cursor.close();
+        db.close();
+
+        return category;
+    }
+
+
+    public ArrayList<NewsArticle> getNewsArticlesByCategory(String cat){
+
+        ArrayList<NewsArticle> articles = new ArrayList<NewsArticle>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT * FROM newsarticle WHERE category = '" + cat + "' ORDER BY id ASC ;";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+        for(int i=0;i<cursor.getCount(); i++){
+            NewsArticle newsArticle = new NewsArticle(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                    cursor.getString(4), cursor.getInt(5), cursor.getInt(6), cursor.getFloat(7), cursor.getFloat(8));
+
+            articles.add(newsArticle);
+            System.out.println("Odabrani po kategoriji ->" + newsArticle.getTitle());
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        db.close();
+
+
+        return articles;
+    }
+
 }

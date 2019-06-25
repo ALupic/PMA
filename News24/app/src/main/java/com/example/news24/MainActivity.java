@@ -71,6 +71,31 @@ public class MainActivity extends AppCompatActivity
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        tabLayout.addOnTabSelectedListener( new TabLayout.OnTabSelectedListener() {
+           DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+
+                int position = tab.getPosition();
+
+                db.selectCategory(db.findCategoryById(position+1).getId());// u bazi postavljam da je selektovana kategorija
+                System.out.println("\n Selektovan poz("+position+1+") kategorija -> " + db.findCategoryById(position+1).getTitle());
+
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                db.unselectAll();
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+
         drawerLayout = findViewById(R.id.drawer_layout);
 
         //NEW
@@ -143,6 +168,7 @@ public class MainActivity extends AppCompatActivity
 
         return true;
     }
+
 
     @Override
         public boolean onOptionsItemSelected(MenuItem item){

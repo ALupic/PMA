@@ -23,8 +23,13 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+
+        DatabaseHelper db = new DatabaseHelper(context);
         TheFragment demoFragment = new TheFragment();
-        position = position + 1;
+
+//        db.selectCategory(db.findCategoryById(position).getId());// u bazi postavljam da je selektovana kategorija
+//        System.out.println("\n Selektovan kategorija -> " + db.findCategoryById(position).getTitle());
+//        //position = position + 1;
         Bundle bundle = new Bundle();
         bundle.putString("message", "Fragment :"+position);
         demoFragment.setArguments(bundle);
@@ -42,9 +47,11 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position){
 
         DatabaseHelper db = new DatabaseHelper(context);
+       // db.selectCategory(db.findCategoryById(position).getId());// u bazi postavljam da je selektovana kategorija
+        return db.findCategoryById(position+1).getTitle();// uzima naslove kategorija iz baze i prosledjuje u tabove
        // categories =  db.getCategories();
       //  position = position + 1;
-        return db.findCategoryById(position).getTitle();
+
 //        if(position==1){
 //            return db.findCategoryById(position).getTitle();
 //        }else if(position==2){

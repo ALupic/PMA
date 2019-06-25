@@ -1,6 +1,7 @@
 package com.example.news24;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -26,8 +27,8 @@ import java.util.List;
 public class TheFragment extends Fragment  {
 
     DatabaseHelper db;
-    private ArrayList<NewsArticle> newsArticles = new ArrayList<NewsArticle>();
-
+   // private ArrayList<NewsArticle> newsArticles = new ArrayList<NewsArticle>();
+    private  int position;
     public TheFragment() {
         // Required empty public constructor
     }
@@ -43,7 +44,15 @@ public class TheFragment extends Fragment  {
         ListView myListView = view.findViewById(R.id.myListView);
 
         db = new DatabaseHelper(getActivity());
-        newsArticles =  db.getNewsArticles();
+        String cat = db.getSelectedCategory().getTitle();
+        System.out.println("\n Selektovan kategorija 2 -> " + cat);
+
+        ArrayList<NewsArticle>  newsArticles = new ArrayList<NewsArticle>();
+        if(cat.equals("Home")){// ako je home prikazuje sve
+            newsArticles =  db.getNewsArticles();
+        }else{
+            newsArticles =  db.getNewsArticlesByCategory(cat);
+        }
 
         String[] articles = new String[newsArticles.size()];
         String[] categories = new String[newsArticles.size()];
@@ -72,6 +81,18 @@ public class TheFragment extends Fragment  {
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
+
+
+                db = new DatabaseHelper(getActivity());
+                String cat = db.getSelectedCategory().getTitle();
+                ArrayList<NewsArticle>  newsArticles = new ArrayList<NewsArticle>();
+                System.out.println("\n Selektovan kategorija KLIKNUTO-> " + db.findCategoryById(position).getTitle());
+
+                if(cat.equals("Home")){// ako je home prikazuje sve
+                    newsArticles =  db.getNewsArticles();
+                }else{
+                    newsArticles =  db.getNewsArticlesByCategory(cat);
+                }
 
                 Intent showArticleActivity = new Intent(view.getContext(), ArticleActivity.class);
                 int newsArticleId = newsArticles.get(position).getId();
