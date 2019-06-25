@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="register.db";
@@ -29,6 +30,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE newsarticle (id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, title TEXT, image TEXT, content TEXT, likes INTEGER, dislikes INTEGER, lat FLOAT(4,8), long FLOAT(4,8))");
         db.execSQL("CREATE TABLE comment (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT, time DATETIME, likes INTEGER, dislikes INTEGER, user_id TEXT, article_id INTEGER, FOREIGN KEY(user_id) REFERENCES registeruser(username), FOREIGN KEY(article_id) REFERENCES newsarticle(id))");
         db.execSQL("CREATE TABLE favorites(id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, article_id INTEGER, FOREIGN KEY(user_id) REFERENCES registeruser(username), FOREIGN KEY(article_id) REFERENCES newsarticle(id))");
+        //db.execSQL("CREATE TABLE category (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, article_id INTEGER, FOREIGN KEY(article_id) REFERENCES newsarticle(id))");
+        db.execSQL("CREATE TABLE category (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT)");
+
 
         //INSERT ADMIN USER
         db.execSQL("INSERT INTO registeruser VALUES ('admin','admin', 1, 0)");
@@ -145,6 +149,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO favorites VALUES (3,'leksa', 1 )");
         db.execSQL("INSERT INTO favorites VALUES (4,'leksa', 2 )");
         db.execSQL("INSERT INTO favorites VALUES (5,'isidora', 2 )");
+
+
+        //INSERT CATEGORY za sada se ne koristi
+        db.execSQL("INSERT INTO category VALUES (0,'Home')");
+        db.execSQL("INSERT INTO category VALUES (1,'Sport')");
+        db.execSQL("INSERT INTO category VALUES (2,'Politics')");
+        db.execSQL("INSERT INTO category VALUES (3,'Travel' )");
+        db.execSQL("INSERT INTO category VALUES (4,'Technology' )");
+        db.execSQL("INSERT INTO category VALUES (5,'Entertainment' )");
+        db.execSQL("INSERT INTO category VALUES (6,'Business' )");
+
+
+
+
 
     }
 
@@ -467,4 +485,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        db.close();
 //   }
 
+
+
+    public ArrayList<Category> getCategories(){
+
+        ArrayList<Category> categories = new ArrayList<Category>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT * FROM category ORDER BY id ASC;";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+        for(int i=0;i<cursor.getCount(); i++){
+            Category category = new Category(cursor.getInt(0), cursor.getString(1));
+
+            categories.add(category);
+            //System.out.println("Categorty ->" + category.getTitle());
+            cursor.moveToNext();
+        }
+//        System.out.println(cursor.getString(0));
+//        cursor.moveToNext();
+//        System.out.println(cursor.getString(0));
+
+        cursor.close();
+        db.close();
+
+
+        return categories;
+    }
+
+    public Category findCategoryById(int id){
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "SELECT * FROM category WHERE id = " + id + " ;";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+
+        Category category = new Category(cursor.getInt(0), cursor.getString(1));
+
+        cursor.close();
+        db.close();
+
+        return category;
+    }
 }
