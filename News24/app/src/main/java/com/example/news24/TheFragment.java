@@ -3,11 +3,13 @@ package com.example.news24;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ import java.util.List;
 public class TheFragment extends Fragment  {
 
     DatabaseHelper db;
+    String cat = "Home";
    // private ArrayList<NewsArticle> newsArticles = new ArrayList<NewsArticle>();
     private  int position;
     public TheFragment() {
@@ -44,7 +47,8 @@ public class TheFragment extends Fragment  {
         ListView myListView = view.findViewById(R.id.myListView);
 
         db = new DatabaseHelper(getActivity());
-        String cat = db.getSelectedCategory().getTitle();
+
+        cat = db.getSelectedCategory().getTitle();
         System.out.println("\n Selektovan kategorija 2 -> " + cat);
 
         ArrayList<NewsArticle>  newsArticles = new ArrayList<NewsArticle>();
@@ -117,5 +121,6 @@ public class TheFragment extends Fragment  {
 
         return view;
     }
+
 
 }

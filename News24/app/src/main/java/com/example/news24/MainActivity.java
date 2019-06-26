@@ -72,17 +72,17 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.addOnTabSelectedListener( new TabLayout.OnTabSelectedListener() {
-           DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+            DatabaseHelper db = new DatabaseHelper(getApplicationContext());
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-
                 int position = tab.getPosition();
-
                 db.selectCategory(db.findCategoryById(position+1).getId());// u bazi postavljam da je selektovana kategorija
                 System.out.println("\n Selektovan poz("+position+1+") kategorija -> " + db.findCategoryById(position+1).getTitle());
 
+               // vpAdapter = new ViewPagerAdapter(getSupportFragmentManager(),getApplicationContext());
+               // viewPager.setAdapter(vpAdapter);
 
             }
 
