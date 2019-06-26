@@ -15,11 +15,13 @@ public class AdminActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
     private ViewPager viewPager;
     String[] categories;
+    Button btnAddArticle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
         btnAddCategory = (Button)findViewById(R.id.addTopicButton);
+        btnAddArticle = (Button)findViewById(R.id.addArticleButton);
         tabLayout =(TabLayout) findViewById(R.id.tablayout_id);
         appBarLayout = (AppBarLayout) findViewById(R.id.appBarId);
         viewPager = (ViewPager) findViewById(R.id.viewpager_id);
@@ -31,6 +33,13 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AddFragmentTopic.class);
+                startActivity(intent);
+            }
+        });
+        btnAddArticle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AddFragmentArticle.class);
                 startActivity(intent);
             }
         });

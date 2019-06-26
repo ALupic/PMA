@@ -1,6 +1,5 @@
 package com.example.news24;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,8 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddFragmentTopic extends AppCompatActivity {
-
+public class AddFragmentArticle extends AppCompatActivity {
     DatabaseHelper myDB;
     Button btnAdd,btnView;
     EditText editText;
@@ -17,7 +15,7 @@ public class AddFragmentTopic extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_fragment_topic);
+        setContentView(R.layout.activity_add_fragment_article);
         editText = (EditText) findViewById(R.id.editText);
         btnAdd = (Button) findViewById(R.id.btnAdd);
         myDB = new DatabaseHelper(this);
@@ -30,7 +28,7 @@ public class AddFragmentTopic extends AppCompatActivity {
                     AddData(newEntry);
                     editText.setText("");
                 }else{
-                    Toast.makeText(AddFragmentTopic.this, "You must put something in the text field!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddFragmentArticle.this, "You must put something in the text field!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -41,7 +39,7 @@ public class AddFragmentTopic extends AppCompatActivity {
 
     public void AddData(String newEntry) {
 
-        boolean insertData = myDB.addCategory(newEntry);
+        boolean insertData = myDB.addArticle(newEntry);
 
         if(insertData==true){
             Toast.makeText(this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();

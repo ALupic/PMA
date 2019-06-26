@@ -15,7 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddFragmentTopic"></activity>
+        <activity android:name=".AcceptRejectComments"></activity>
+        <activity android:name=".AddFragmentArticle" />
+        <activity android:name=".EditFragmentArticleAdmin" />
+        <activity android:name=".AddFragmentTopic" />
         <activity android:name=".EditFragmentAdmin" />
         <activity android:name=".AdminActivity" /> <!-- <activity android:name=".NewsWidgetConfigureActivity"> -->
         <!-- <intent-filter> -->
