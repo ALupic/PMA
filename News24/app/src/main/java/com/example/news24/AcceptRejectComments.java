@@ -7,12 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-public class EditFragmentAdmin extends AppCompatActivity {
+public class AcceptRejectComments extends AppCompatActivity {
 
-
-    private Button btnSave,btnDelete;
+    private Button btnAccept,btnDelete;
     private EditText editable_item;
 
     DatabaseHelper mDatabaseHelper;
@@ -23,9 +21,9 @@ public class EditFragmentAdmin extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_fragment_admin);
-        btnSave = (Button) findViewById(R.id.btnSave);
-        btnDelete = (Button) findViewById(R.id.btnDelete);
+        setContentView(R.layout.activity_accept_reject_comments);
+        btnAccept = (Button) findViewById(R.id.btnAcceptComment);
+        btnDelete = (Button) findViewById(R.id.btnDeleteComment);
         editable_item = (EditText) findViewById(R.id.editable_item);
         mDatabaseHelper = new DatabaseHelper(this);
 
@@ -41,28 +39,21 @@ public class EditFragmentAdmin extends AppCompatActivity {
         //set the text to show the current selected name
         editable_item.setText(selectedName);
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
+        btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String item = editable_item.getText().toString();
-                if(!item.equals("")){
-                    mDatabaseHelper.updateName(item,selectedID,selectedName);
-                }
-                }
-
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+                startActivity(intent);
+            }
         });
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mDatabaseHelper.deleteName(selectedID,selectedName);
+                mDatabaseHelper.deleteComment(selectedID,selectedName);
                 editable_item.setText("");
             }
         });
 
     }
-
-
-
-
 }
