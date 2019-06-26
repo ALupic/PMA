@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "493559719578",
+    "firebase_url": "https://newsapp-6f292.firebaseio.com",
+    "project_id": "newsapp-6f292",
+    "storage_bucket": "newsapp-6f292.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493559719578:android:3b0bd23fae4cccca",
+        "android_client_info": {
+          "package_name": "com.example.news24"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493559719578-0k8cotu3mt5ro8qctv76me1s6bq632m9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3nadc3h7k2ZFVk0I0ejsrgSf0YHPhUX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493559719578-0k8cotu3mt5ro8qctv76me1s6bq632m9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

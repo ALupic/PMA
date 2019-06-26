@@ -2,10 +2,10 @@ package com.example.news24;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
 public class FavoritesActivity extends AppCompatActivity {
 

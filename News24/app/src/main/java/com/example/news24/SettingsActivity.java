@@ -2,11 +2,10 @@ package com.example.news24;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TextView;
 
 public class SettingsActivity extends AppCompatActivity {
 
