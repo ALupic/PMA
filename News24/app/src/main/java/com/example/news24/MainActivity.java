@@ -267,7 +267,10 @@ public class MainActivity extends AppCompatActivity
                 Intent favoritesIntent = new Intent(MainActivity.this, FavoritesActivity.class);
                 startActivity(favoritesIntent);
             }
-        }else{
+        }else if(id == R.id.nav_control_panel) {
+            Intent adminIntent = new Intent(MainActivity.this, AdminActivity.class);
+            startActivity(adminIntent);
+        } else{
                 Toast.makeText(this, "You clicked something else", Toast.LENGTH_SHORT).show();
         }
         return false;

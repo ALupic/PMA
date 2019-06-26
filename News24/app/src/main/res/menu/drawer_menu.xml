@@ -30,6 +30,10 @@
             android:id="@+id/nav_business"
             android:title="Business"
             />
+        <item
+            android:id="@+id/nav_control_panel"
+            android:title="Control panel"
+            />
     </group>
 
     <item android:title="Others">
