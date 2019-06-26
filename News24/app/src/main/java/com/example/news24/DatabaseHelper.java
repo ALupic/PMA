@@ -603,5 +603,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return articles;
     }
+    public Cursor getCategoryID(String name){
 
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "SELECT " + "id" + " FROM " + "category" +
+                " WHERE " + "title" + " = '" + name + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+    public void updateName(String newName, int id, String oldName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + "category" + " SET " + "title" +
+                " = '" + newName + "' WHERE " + "id" + " = '" + id + "'" +
+                " AND " + "title" + " = '" + oldName + "'";
+        db.execSQL(query);
+    }
+
+    /**
+     * Delete from database
+     * @param id
+     * @param name
+     */
+    public void deleteName(int id, String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + "category" + " WHERE "
+                + "id" + " = '" + id + "'" +
+                " AND " + "title" + " = '" + name + "'";
+        db.execSQL(query);
+    }
+    public boolean addCategory(String item1) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("title", item1);
+
+        long result = db.insert("category", null, contentValues);
+
+        //if date as inserted incorrectly it will return -1
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
