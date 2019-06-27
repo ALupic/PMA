@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private ViewPager viewPager;
-    private ViewPagerAdapter vpAdapter;
+
     private TabLayout tabLayout;
 
     DatabaseHelper db;
@@ -65,7 +65,12 @@ public class MainActivity extends AppCompatActivity
 
 
         viewPager = findViewById(R.id.pager);
-        vpAdapter = new ViewPagerAdapter(getSupportFragmentManager(),this);
+
+        ViewPagerAdapter vpAdapter = new ViewPagerAdapter(getSupportFragmentManager(),this);
+
+        for(int i = 0; i < db.getCategories().size(); i++){
+            vpAdapter.addFragment(new TheFragment());
+        }
         viewPager.setAdapter(vpAdapter);
 
         tabLayout = findViewById(R.id.tabs);

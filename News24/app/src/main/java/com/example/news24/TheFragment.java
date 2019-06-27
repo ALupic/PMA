@@ -90,7 +90,7 @@ public class TheFragment extends Fragment  {
                 db = new DatabaseHelper(getActivity());
                 String cat = db.getSelectedCategory().getTitle();
                 ArrayList<NewsArticle>  newsArticles = new ArrayList<NewsArticle>();
-                System.out.println("\n Selektovan kategorija KLIKNUTO-> " + db.findCategoryById(position).getTitle());
+               // System.out.println("\n Selektovan kategorija KLIKNUTO-> " + db.findCategoryById(position).getTitle());
 
                 if(cat.equals("Home")){// ako je home prikazuje sve
                     newsArticles =  db.getNewsArticles();
