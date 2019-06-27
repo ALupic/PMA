@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setLogo(R.drawable.news_pic);
 
-
+        db.selectCategory(db.findCategoryById(1).getId());//Home prvi selektovan
         viewPager = findViewById(R.id.pager);
 
         ViewPagerAdapter vpAdapter = new ViewPagerAdapter(getSupportFragmentManager(),this);

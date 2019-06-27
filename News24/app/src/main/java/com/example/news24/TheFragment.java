@@ -2,6 +2,7 @@ package com.example.news24;
 
 
 import android.annotation.SuppressLint;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
@@ -10,6 +11,7 @@ import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,9 @@ public class TheFragment extends Fragment  {
     private  int position;
     public TheFragment() {
         // Required empty public constructor
+
     }
+
 
 
     @Override
@@ -119,8 +123,18 @@ public class TheFragment extends Fragment  {
             }
         });
 
+
+
         return view;
     }
 
-
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            // Refresh your fragment here
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+            Log.i("IsRefresh", "Yes");
+        }
+    }
 }
