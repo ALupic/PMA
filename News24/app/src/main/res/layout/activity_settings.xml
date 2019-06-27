@@ -45,4 +45,61 @@
         app:layout_constraintVertical_bias="0.0"
         tools:checked="false" />
 
+    <TextView
+        android:id="@+id/textViewFont"
+        android:layout_width="78dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Font"
+        android:textColorHint="#00050505"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.097"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notificationSwitch"
+        app:layout_constraintVertical_bias="0.081" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupFont"
+        android:layout_width="152dp"
+        android:layout_height="231dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFont">
+
+        <RadioButton
+            android:id="@+id/radioButtonFontSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Small"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/radioButtonFontMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Medium"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/radioButtonFontLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Large"
+            android:textSize="18sp" />
+    </RadioGroup>
+
 </android.support.constraint.ConstraintLayout>
