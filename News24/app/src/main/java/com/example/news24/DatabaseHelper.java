@@ -642,5 +642,89 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } else {
             return true;
         }
+    }  public Cursor getArticleID(String name){
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "SELECT " + "id" + " FROM " + "newsarticle" +
+                " WHERE " + "title" + " = '" + name + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+    public void updateNameArticle(String newName, int id, String oldName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + "newsarticle" + " SET " + "title" +
+                " = '" + newName + "' WHERE " + "id" + " = '" + id + "'" +
+                " AND " + "title" + " = '" + oldName + "'";
+        db.execSQL(query);
+    }
+
+    /**
+     * Delete from database
+     * @param id
+     * @param name
+     */
+    public void deleteNameArticle(int id, String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + "newsarticle" + " WHERE "
+                + "id" + " = '" + id + "'" +
+                " AND " + "title" + " = '" + name + "'";
+        db.execSQL(query);
+    }
+    public boolean addArticle(String item1) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("title", item1);
+
+        long result = db.insert("newsarticle", null, contentValues);
+
+        //if date as inserted incorrectly it will return -1
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public ArrayList<Comment> getComments(){
+
+        ArrayList<Comment> comments = new ArrayList<Comment>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT * FROM comment ORDER BY id ASC;";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+        for(int i=0;i<cursor.getCount(); i++){
+            Comment comment = new Comment(cursor.getInt(0), cursor.getString(1),cursor.getString(2),cursor.getInt(3),cursor.getInt(4),cursor.getString(5),cursor.getInt(6));
+
+            comments.add(comment);
+            //System.out.println("Categorty ->" + category.getTitle());
+            cursor.moveToNext();
+        }
+//        System.out.println(cursor.getString(0));
+//        cursor.moveToNext();
+//        System.out.println(cursor.getString(0));
+
+        cursor.close();
+        db.close();
+
+
+        return comments;
+    }
+    public Cursor getCommentID(String name){
+
+    SQLiteDatabase db = getReadableDatabase();
+
+    String query = "SELECT " + "id" + " FROM " + "comment" +
+            " WHERE " + "content" + " = '" + name + "'";
+    Cursor data = db.rawQuery(query, null);
+    return data;
+    }
+    public void deleteComment(int id, String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + "comment" + " WHERE "
+                + "id" + " = '" + id + "'" +
+                " AND " + "content" + " = '" + name + "'";
+        db.execSQL(query);
     }
 }

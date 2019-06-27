@@ -1,14 +1,14 @@
 package com.example.news24;
 
 import android.content.Intent;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class EditFragmentAdmin extends AppCompatActivity {
+public class EditFragmentArticleAdmin extends AppCompatActivity {
 
 
     private Button btnSave,btnDelete;
@@ -22,9 +22,9 @@ public class EditFragmentAdmin extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_fragment_admin);
-        btnSave = (Button) findViewById(R.id.btnSave);
-        btnDelete = (Button) findViewById(R.id.btnDelete);
+        setContentView(R.layout.activity_edit_fragment_article_admin);
+        btnSave = (Button) findViewById(R.id.btnSaveArticle);
+        btnDelete = (Button) findViewById(R.id.btnDeleteArticle);
         editable_item = (EditText) findViewById(R.id.editable_item);
         mDatabaseHelper = new DatabaseHelper(this);
 
@@ -45,23 +45,19 @@ public class EditFragmentAdmin extends AppCompatActivity {
             public void onClick(View view) {
                 String item = editable_item.getText().toString();
                 if(!item.equals("")){
-                    mDatabaseHelper.updateName(item,selectedID,selectedName);
+                    mDatabaseHelper.updateNameArticle(item,selectedID,selectedName);
                 }
-                }
+            }
 
         });
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mDatabaseHelper.deleteName(selectedID,selectedName);
+                mDatabaseHelper.deleteNameArticle(selectedID,selectedName);
                 editable_item.setText("");
             }
         });
 
     }
-
-
-
-
 }
