@@ -2,47 +2,47 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:title="Home" />
-        <item
-            android:id="@+id/nav_politics"
-            android:title="Politics"
-            />
-        <item
-            android:id="@+id/nav_sport"
-            android:title="Sport"
-            />
-        <item
-            android:id="@+id/nav_travel"
-            android:title="Travel"
-            />
-        <item
-            android:id="@+id/nav_enter"
-            android:title="Entertainment"
-            />
-        <item
-            android:id="@+id/nav_tech"
-            android:title="Technology"
-            />
-        <item
-            android:id="@+id/nav_business"
-            android:title="Business"
-            />
-        <item
-            android:id="@+id/nav_control_panel"
-            android:title="Control panel"
-            />
-    </group>
+    <!--<group android:checkableBehavior="single">-->
+        <!--<item-->
+            <!--android:id="@+id/nav_home"-->
+            <!--android:title="Home" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_politics"-->
+            <!--android:title="Politics"-->
+            <!--/>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_sport"-->
+            <!--android:title="Sport"-->
+            <!--/>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_travel"-->
+            <!--android:title="Travel"-->
+            <!--/>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_enter"-->
+            <!--android:title="Entertainment"-->
+            <!--/>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_tech"-->
+            <!--android:title="Technology"-->
+            <!--/>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_business"-->
+            <!--android:title="Business"-->
+            <!--/>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_control_panel"-->
+            <!--android:title="Control panel"-->
+            <!--/>-->
+    <!--</group>-->
 
-    <item android:title="Others">
-        <menu>
-            <item
-                android:id="@+id/nav_favorites"
-                android:title="My Favorites"
-                />
-        </menu>
-    </item>
+    <!--<item android:title="Others">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/nav_favorites"-->
+                <!--android:title="My Favorites"-->
+                <!--/>-->
+        <!--</menu>-->
+    <!--</item>-->
 
 </menu>

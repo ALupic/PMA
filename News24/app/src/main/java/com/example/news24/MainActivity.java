@@ -17,9 +17,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.TabLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -101,17 +103,14 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        drawerLayout = findViewById(R.id.drawer_layout);
+
 
         //NEW
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        displayNavigationBar();//navigacioni dinamicki kreiran
+//        drawerLayout = findViewById(R.id.drawer_layout);
+//        NavigationView navigationView = findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
 
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
 
 
     }
@@ -255,29 +254,102 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
         int id = item.getItemId();
 
-        if(id==R.id.nav_home){
-            Toast.makeText(this, "You clicked Home", Toast.LENGTH_SHORT).show();
-            //Intent i1 = new Intent(MainActivity.this, TheFragment.class);
-            //i1.putExtra("value", 1);
-            //startActivity(i1);
-        }else if(id==R.id.nav_politics){
-            Toast.makeText(this, "You clicked Politics", Toast.LENGTH_SHORT).show();
-        }else if(id==R.id.nav_favorites) {
-
-            if(sharedPreferences.getString("username","").equals("")){
-                Toast.makeText(this, "Login first", Toast.LENGTH_SHORT).show();
-
-            }else {
-                Toast.makeText(this, "You clicked Favorites", Toast.LENGTH_SHORT).show();
-                Intent favoritesIntent = new Intent(MainActivity.this, FavoritesActivity.class);
-                startActivity(favoritesIntent);
-            }
-        }else if(id == R.id.nav_control_panel) {
-            Intent adminIntent = new Intent(MainActivity.this, AdminActivity.class);
-            startActivity(adminIntent);
-        } else{
-                Toast.makeText(this, "You clicked something else", Toast.LENGTH_SHORT).show();
-        }
+//        if(id==R.id.nav_home){
+//            Toast.makeText(this, "You clicked Home", Toast.LENGTH_SHORT).show();
+//            //Intent i1 = new Intent(MainActivity.this, TheFragment.class);
+//            //i1.putExtra("value", 1);
+//            //startActivity(i1);
+//        }else if(id==R.id.nav_politics){
+//            Toast.makeText(this, "You clicked Politics", Toast.LENGTH_SHORT).show();
+//        }else if(id==R.id.nav_favorites) {
+//
+//            if(sharedPreferences.getString("username","").equals("")){
+//                Toast.makeText(this, "Login first", Toast.LENGTH_SHORT).show();
+//
+//            }else {
+//                Toast.makeText(this, "You clicked Favorites", Toast.LENGTH_SHORT).show();
+//                Intent favoritesIntent = new Intent(MainActivity.this, FavoritesActivity.class);
+//                startActivity(favoritesIntent);
+//            }
+//        }else if(id == R.id.nav_control_panel) {
+//            Intent adminIntent = new Intent(MainActivity.this, AdminActivity.class);
+//            startActivity(adminIntent);
+//        } else{
+//                Toast.makeText(this, "You clicked something else", Toast.LENGTH_SHORT).show();
+//        }
         return false;
+    }
+
+
+    private void displayNavigationBar(){
+        DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        Menu menu = navigationView.getMenu();
+        SubMenu menu1 = menu.addSubMenu("Category");
+        for (Category cat : db.getCategories()
+             ) {
+            menu1.add(cat.getTitle()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+                    int selecetdID = 1;
+                    Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+                    for (Category c: db.getCategories()) {
+                        if(c.getTitle().equals(item.getTitle())){
+                            selecetdID = c.getId();
+                            break;
+                        }
+                    }
+
+                    Category category = db.selectCategory(db.findCategoryById(selecetdID).getId());
+                    if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                    }else{
+                        //super.onBackPressed();
+                    }
+                    viewPager.setCurrentItem(selecetdID-1);// pozicije broji od nule a u bazi cuvamo kao home = 1
+                    return false;
+                }
+            });
+
+        }
+
+        SubMenu menu2 = menu.addSubMenu("Others");
+
+        menu2.add("Control panel").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent adminIntent = new Intent(MainActivity.this, AdminActivity.class);
+                startActivity(adminIntent);
+                return false;
+            }
+        });
+
+        menu2.add("My Favorites").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(sharedPreferences.getString("username","").equals("")){
+
+                    Toast.makeText(getApplicationContext(), "Login first", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    Toast.makeText(getApplicationContext(), "You clicked Favorites", Toast.LENGTH_SHORT).show();
+                    Intent favoritesIntent = new Intent(MainActivity.this, FavoritesActivity.class);
+                    startActivity(favoritesIntent);
+                }
+                return false;
+            }
+        });
+
+
+      //  drawerLayout.closeDrawer();
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
     }
 }
