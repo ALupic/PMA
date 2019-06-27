@@ -8,12 +8,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     DatabaseHelper db;
     private Context context;
     private ArrayList<Category> categories = new ArrayList<Category>();
+    private final List<Fragment> mFragmentList = new ArrayList<>();
 
 
     public ViewPagerAdapter(FragmentManager fm, Context context) {
@@ -21,26 +23,36 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         this.context = context;
     }
 
+    public void addFragment(Fragment fragment){
+        mFragmentList.add(fragment);
+
+    }
+
     @Override
-    public Fragment getItem(int position) {
-
-        DatabaseHelper db = new DatabaseHelper(context);
-        TheFragment demoFragment = new TheFragment();
-
-//        db.selectCategory(db.findCategoryById(position).getId());// u bazi postavljam da je selektovana kategorija
-//        System.out.println("\n Selektovan kategorija -> " + db.findCategoryById(position).getTitle());
-//        //position = position + 1;
-        Bundle bundle = new Bundle();
-        bundle.putString("message", "Fragment :"+position);
-        demoFragment.setArguments(bundle);
-
-        return demoFragment;
+    public Fragment getItem(int i) {
+        return mFragmentList.get(i);
     }
 
     @Override
     public int getCount() {
-        return 7;
+        return mFragmentList.size();
     }
+//    @Override
+//    public Fragment getItem(int position) {
+//
+//        DatabaseHelper db = new DatabaseHelper(context);
+//        TheFragment demoFragment = new TheFragment();
+//
+////        db.selectCategory(db.findCategoryById(position).getId());// u bazi postavljam da je selektovana kategorija
+////        System.out.println("\n Selektovan kategorija -> " + db.findCategoryById(position).getTitle());
+////        //position = position + 1;
+//        Bundle bundle = new Bundle();
+//        bundle.putString("message", "Fragment :"+position);
+//        demoFragment.setArguments(bundle);
+//
+//        return demoFragment;
+//    }
+
 
     @Nullable
     @Override
@@ -68,4 +80,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 //            return "Business";
 //        }
     }
+
+
 }

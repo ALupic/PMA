@@ -24,7 +24,7 @@
         android:layout_marginLeft="26dp"
         android:layout_toRightOf="@+id/addTopicButton"
         android:text="Add article" /></RelativeLayout>
-    
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"

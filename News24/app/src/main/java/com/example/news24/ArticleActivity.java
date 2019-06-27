@@ -4,28 +4,48 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.widget.Toolbar;
-
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
+import android.view.Display;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 
-public class ArticleActivity extends AppCompatActivity {
+public class ArticleActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ArrayList<Favorites> favorites = new ArrayList<Favorites>();
     private ArrayList<NewsArticle> newsArticlesPrepare = new ArrayList<NewsArticle>();
     private Toolbar toolbar;
     NewsArticle newsArticle = new NewsArticle();
     DatabaseHelper db;
+
+    private DrawerLayout drawerLayout;
+    private ViewPager viewPager;
 
     ToggleButton acFavoritesToggleButton;
     ToggleButton acLikeToggleButton;
@@ -51,10 +71,8 @@ public class ArticleActivity extends AppCompatActivity {
         db = new DatabaseHelper(this);
 
         toolbar = findViewById(R.id.toolBar);
-
-//        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 //        getSupportActionBar().setTitle(null);
-
 //        getSupportActionBar().setLogo(R.drawable.news_pic);
 
 
@@ -80,6 +98,8 @@ public class ArticleActivity extends AppCompatActivity {
         acLikeTextView.setText(String.valueOf(newsArticle.getLikes()));
         acDisikeTextView.setText(String.valueOf(newsArticle.getDislikes()));
 
+        acTitleTextView.setMovementMethod(new ScrollingMovementMethod());
+        acContentTextView.setMovementMethod(new ScrollingMovementMethod());
         String imgName = newsArticle.getImage();
         Context c = ArticleActivity.this;
         Resources res = getResources();
@@ -227,9 +247,134 @@ public class ArticleActivity extends AppCompatActivity {
             }
 
         });
+        displayNavigationBar();
+    }
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else{
+            super.onBackPressed();
+        }
+    }
+
+
+    private void displayNavigationBar(){
+        DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        drawerLayout = findViewById(R.id.drawer_layout_article);
+        Menu menu = navigationView.getMenu();
+        SubMenu menu2 = menu.addSubMenu("Others");
+
+        menu2.add("Control panel").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent adminIntent = new Intent(ArticleActivity.this, AdminActivity.class);
+                startActivity(adminIntent);
+                return false;
+            }
+        });
+
+        menu2.add("My Favorites").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(sharedPreferences.getString("username","").equals("")){
+
+                    Toast.makeText(getApplicationContext(), "Login first", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    Toast.makeText(getApplicationContext(), "You clicked Favorites", Toast.LENGTH_SHORT).show();
+                    Intent favoritesIntent = new Intent(ArticleActivity.this, FavoritesActivity.class);
+                    startActivity(favoritesIntent);
+                }
+                return false;
+            }
+        });
+
+
+        //  drawerLayout.closeDrawer();
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
     }
 
 
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        //int id = item.getItemId();
+        switch (item.getItemId()){
+
+
+            case R.id.option_login:
+                Intent loginIntent = new Intent(ArticleActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
+                break;
+
+            case R.id.option_settings:
+                Intent settingsIntent = new Intent(ArticleActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                break;
+            case R.id.option_logout:
+                loginIntent = new Intent(ArticleActivity.this, LoginActivity.class);
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+
+                startActivity(loginIntent);
+                break;
+
+            case R.id.option_register:
+                Intent registerIntent = new Intent(ArticleActivity.this, RegisterActivity.class);
+                startActivity(registerIntent);
+                break;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+
+        MenuItem loginMenu = menu.findItem(R.id.option_login);
+        MenuItem logOutMenu = menu.findItem(R.id.option_logout);
+        MenuItem settingsMenu = menu.findItem(R.id.option_settings);
+        MenuItem registerMenu = menu.findItem(R.id.option_register);
+
+        if(sharedPreferences.getString("username","").equals("")){ //IF THERE IS NO SESSION
+            loginMenu.setVisible(true);
+            registerMenu.setVisible(true);
+            logOutMenu.setVisible(false);
+            settingsMenu.setVisible(false);
+        }
+        else{
+            loginMenu.setVisible(false);
+            registerMenu.setVisible(false);
+            logOutMenu.setVisible(true);
+            settingsMenu.setVisible(true);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return false;
+    }
 }

@@ -1,11 +1,17 @@
 package com.example.news24;
 
-
+import android.annotation.SuppressLint;
+import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
+import android.os.Parcelable;
+import android.provider.ContactsContract;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +27,14 @@ import java.util.ArrayList;
 public class TheFragment extends Fragment  {
 
     DatabaseHelper db;
+    String cat = "Home";
    // private ArrayList<NewsArticle> newsArticles = new ArrayList<NewsArticle>();
     private  int position;
     public TheFragment() {
         // Required empty public constructor
+
     }
+
 
 
     @Override
@@ -38,7 +47,8 @@ public class TheFragment extends Fragment  {
         ListView myListView = view.findViewById(R.id.myListView);
 
         db = new DatabaseHelper(getActivity());
-        String cat = db.getSelectedCategory().getTitle();
+
+        cat = db.getSelectedCategory().getTitle();
         System.out.println("\n Selektovan kategorija 2 -> " + cat);
 
         ArrayList<NewsArticle>  newsArticles = new ArrayList<NewsArticle>();
@@ -80,7 +90,7 @@ public class TheFragment extends Fragment  {
                 db = new DatabaseHelper(getActivity());
                 String cat = db.getSelectedCategory().getTitle();
                 ArrayList<NewsArticle>  newsArticles = new ArrayList<NewsArticle>();
-                System.out.println("\n Selektovan kategorija KLIKNUTO-> " + db.findCategoryById(position).getTitle());
+               // System.out.println("\n Selektovan kategorija KLIKNUTO-> " + db.findCategoryById(position).getTitle());
 
                 if(cat.equals("Home")){// ako je home prikazuje sve
                     newsArticles =  db.getNewsArticles();
@@ -109,7 +119,18 @@ public class TheFragment extends Fragment  {
             }
         });
 
+
+
         return view;
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            // Refresh your fragment here
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+            Log.i("IsRefresh", "Yes");
+        }
+    }
 }
