@@ -4,20 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.Configuration;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
-import java.util.prefs.Preferences;
 
 public class SettingsActivity extends AppCompatActivity {
 

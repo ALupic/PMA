@@ -45,9 +45,6 @@
         app:layout_constraintVertical_bias="0.0"
         tools:checked="false" />
 
-<<<<<<< HEAD
-</androidx.constraintlayout.widget.ConstraintLayout>
-=======
     <TextView
         android:id="@+id/textViewFont"
         android:layout_width="78dp"
@@ -80,30 +77,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewFont">
 
-        <RadioButton
-            android:id="@+id/radioButtonFontSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Small"
-            android:textSize="18sp" />
+    <RadioButton
+        android:id="@+id/radioButtonFontSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Small"
+        android:textSize="18sp" />
 
-        <RadioButton
-            android:id="@+id/radioButtonFontMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Medium"
-            android:textSize="18sp" />
+    <RadioButton
+        android:id="@+id/radioButtonFontMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Medium"
+        android:textSize="18sp" />
 
-        <RadioButton
-            android:id="@+id/radioButtonFontLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Large"
-            android:textSize="18sp" />
+    <RadioButton
+        android:id="@+id/radioButtonFontLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Large"
+        android:textSize="18sp" />
     </RadioGroup>
 
-</android.support.constraint.ConstraintLayout>
->>>>>>> ba43e44a9ead454c7363af005ebd99f361461ab4
+</androidx.constraintlayout.widget.ConstraintLayout>

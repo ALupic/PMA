@@ -4,13 +4,9 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.os.SystemClock;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class NewsWidgetService extends RemoteViewsService {
     @Override

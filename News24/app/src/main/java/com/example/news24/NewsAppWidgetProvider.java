@@ -1,7 +1,5 @@
 package com.example.news24;
 
-
-
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -9,11 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.RemoteViews;
-import android.widget.Toast;
-
-import com.example.news24.MainActivity;
-import com.example.news24.R;
-
 
 public class NewsAppWidgetProvider extends AppWidgetProvider {
 

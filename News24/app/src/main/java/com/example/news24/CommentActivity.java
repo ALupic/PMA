@@ -1,7 +1,6 @@
 package com.example.news24;
 
 import android.annotation.SuppressLint;
-
 import androidx.fragment.app.DialogFragment;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 
 public class CommentActivity extends AppCompatActivity implements CommentDialog.NoticeDialogListener{

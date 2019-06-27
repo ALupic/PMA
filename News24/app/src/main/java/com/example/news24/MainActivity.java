@@ -16,17 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
-import android.support.design.widget.TabLayout;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.SubMenu;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.Toast;
 import java.util.ArrayList;
 

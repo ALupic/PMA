@@ -1,7 +1,5 @@
 package com.example.news24;
 
-import java.util.Date;
-
 public class Comment {
     private int id;
     private String content;
