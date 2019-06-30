@@ -347,6 +347,15 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        menu2.add("Search").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(searchIntent);
+                return false;
+            }
+        });
+
         menu2.add("My Favorites").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -362,6 +371,7 @@ public class MainActivity extends AppCompatActivity
                 return false;
             }
         });
+
 
 
         //drawerLayout.closeDrawer();

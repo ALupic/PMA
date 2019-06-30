@@ -30,7 +30,7 @@ public class ViewFavoritesAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 7;
+        return 1;
     }
 
     @Nullable
@@ -38,19 +38,9 @@ public class ViewFavoritesAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position){
         position = position + 1;
         if(position==1){
-            return "Home";
-        }else if(position==2){
-            return "Politics";
-        }else if(position==3){
-            return "Sport";
-        }else if(position==4) {
-            return "Travel";
-        }else if(position==5){
-            return "Entertainment";
-        }else if(position==6){
-            return "Technology";
-        }else{
-            return "Business";
+            return "My favorites";
         }
+        return "My favorites";
+
     }
 }

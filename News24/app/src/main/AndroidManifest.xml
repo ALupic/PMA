@@ -10,14 +10,14 @@
 
     <application
         android:allowBackup="true"
+        android:configChanges="fontScale"
         android:icon="@mipmap/ic_launcher"
         android:label="News"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:configChanges="fontScale"
-        >
-        <activity android:name=".AcceptRejectComments"></activity>
+        android:theme="@style/AppTheme">
+        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".AcceptRejectComments" />
         <activity android:name=".AddFragmentArticle" />
         <activity android:name=".EditFragmentArticleAdmin" />
         <activity android:name=".AddFragmentTopic" />
