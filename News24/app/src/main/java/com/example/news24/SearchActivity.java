@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -26,6 +29,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private ListView search_articles;
     private ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> adapter2;
+
     private ArrayList<NewsArticle> newsArticles = new ArrayList<NewsArticle>();
 
     private ViewFavoritesAdapter vpAdapter;
@@ -56,6 +61,11 @@ public class SearchActivity extends AppCompatActivity {
             dbArticles[i] = newsArticles.get(i).getTitle();
         }
 
+        ArrayList<String> titles = new ArrayList<String>();
+        for(NewsArticle n : newsArticles){
+            titles.add(n.getTitle());
+        }
+
         search_articles = (ListView) findViewById(R.id.search_articles);
         ArrayList<String> arrayArticles = new ArrayList<>();
         arrayArticles.addAll(Arrays.asList(getResources().getStringArray(R.array.articles)));
@@ -63,11 +73,45 @@ public class SearchActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(
                 SearchActivity.this,
                 android.R.layout.simple_list_item_1,
-                arrayArticles
+                titles
         );
 
+
+        adapter2 = new ArrayAdapter<String>(
+                SearchActivity.this,
+                android.R.layout.simple_list_item_1,
+                titles
+        );
         search_articles.setAdapter(adapter);
 
+
+
+        search_articles.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
+
+
+                db = new DatabaseHelper(getApplicationContext());
+               // String cat = db.getSelectedCategory().getTitle();
+                //ArrayList<NewsArticle>  newsArticles = new ArrayList<NewsArticle>();
+                // System.out.println("\n Selektovan kategorija KLIKNUTO-> " + db.findCategoryById(position).getTitle());
+
+//                if(cat.equals("Home")){// ako je home prikazuje sve
+//                    newsArticles =  db.getNewsArticles();
+//                }else{
+//                    newsArticles =  db.getNewsArticlesByCategory(cat);
+//                }
+                System.out.println("\n  ID SearchActivity : " + id);
+                Intent showArticleActivity = new Intent(view.getContext(), ArticleActivity.class);
+              //  int newsArticleId = newsArticles.get(position).getId();
+
+                NewsArticle newsArticle = db.findNewsArticleById((int) id);
+                showArticleActivity.putExtra("newsArticle", newsArticle);
+
+
+                startActivity(showArticleActivity);
+            }
+        });
 
         //viewFavorites = findViewById(R.id.viewFavorites);
         //vpAdapter = new ViewFavoritesAdapter(getSupportFragmentManager(), username);
@@ -90,6 +134,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 adapter.getFilter().filter(newText);
+
                 return false;
             }
         });
