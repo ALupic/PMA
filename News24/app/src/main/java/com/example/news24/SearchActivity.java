@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -27,6 +30,7 @@ public class SearchActivity extends AppCompatActivity {
     private ListView search_articles;
     private ArrayAdapter<String> adapter;
     private ArrayList<NewsArticle> newsArticles = new ArrayList<NewsArticle>();
+    private ArrayList<NewsArticle> temp = new ArrayList<NewsArticle>();
 
     private ViewFavoritesAdapter vpAdapter;
     private ViewPager viewFavorites;
@@ -51,11 +55,15 @@ public class SearchActivity extends AppCompatActivity {
         db = new DatabaseHelper(this);
         newsArticles =  db.getNewsArticles();
 
-        String[] dbArticles = new String[newsArticles.size()];
-        for(int i = 0; i < newsArticles.size(); i++){
-            dbArticles[i] = newsArticles.get(i).getTitle();
-        }
+//        String[] dbArticles = new String[newsArticles.size()];
+//        for(int i = 0; i < newsArticles.size(); i++){
+//            dbArticles[i] = newsArticles.get(i).getTitle();
+//        }
 
+        ArrayList<String> titles = new ArrayList<String>();
+        for(NewsArticle n: newsArticles){
+            titles.add(n.getTitle());
+        }
         search_articles = (ListView) findViewById(R.id.search_articles);
         ArrayList<String> arrayArticles = new ArrayList<>();
         arrayArticles.addAll(Arrays.asList(getResources().getStringArray(R.array.articles)));
@@ -63,10 +71,30 @@ public class SearchActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(
                 SearchActivity.this,
                 android.R.layout.simple_list_item_1,
-                arrayArticles
+                titles
         );
 
         search_articles.setAdapter(adapter);
+
+        search_articles.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
+                System.out.println("\nID Search:" + id);
+                db = new DatabaseHelper(getApplicationContext());
+
+                //ArrayList<NewsArticle>  newsArticles = new ArrayList<NewsArticle>();
+                // System.out.println("\n Selektovan kategorija KLIKNUTO-> " + db.findCategoryById(position).getTitle());
+
+                Intent showArticleActivity = new Intent(view.getContext(), ArticleActivity.class);
+                int newsArticleId = newsArticles.get(position).getId();
+                NewsArticle newsArticle = db.findNewsArticleById(newsArticleId);
+
+                showArticleActivity.putExtra("newsArticle", newsArticle);
+
+
+                startActivity(showArticleActivity);
+            }
+        });
 
 
         //viewFavorites = findViewById(R.id.viewFavorites);
@@ -89,9 +117,25 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                newText=newText.toLowerCase();
                 adapter.getFilter().filter(newText);
-                return false;
-            }
+                temp = new ArrayList<NewsArticle>();
+                for(NewsArticle n: newsArticles){
+                    String[] words = n.getTitle().split(" ");
+                    for(String s: words){
+                        s=s.toLowerCase();
+                        if(s.startsWith(newText)){
+                            temp.add(n);
+                            break;
+                         }
+
+                    }
+                }
+                newsArticles = temp;
+                        return false;
+                        }
+
+
         });
 
         return super.onCreateOptionsMenu(menu);
