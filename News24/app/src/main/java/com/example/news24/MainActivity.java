@@ -4,21 +4,36 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.view.GravityCompat;
 import androidx.viewpager.widget.ViewPager;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.opencensus.tags.Tag;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,8 +51,9 @@ public class MainActivity extends AppCompatActivity
     DatabaseHelper db;
     private ArrayList<NewsArticle> newsArticles = new ArrayList<NewsArticle>();
 
-//    private ListView myListView;
-//    private String[] articles;
+    FirebaseFirestore firestoreRootRaf;
+    CollectionReference itemRef;
+    ArrayList itemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +61,23 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         DatabaseHelper db = new DatabaseHelper(this);
+        //FIREBASE //stele
+       // GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this).addApi(Auth.GOOGLE_SIGN_IN_API).build();
+        firestoreRootRaf = FirebaseFirestore.getInstance();
+        itemRef = firestoreRootRaf.collection("newsarticle");
+        itemList = new ArrayList<>();
+        readData(new FirestoreCallback() {
+            @Override
+            public void onCallback(List<String> list) {
+                Log.d("MainActivity", list.toString());
+
+            }
+        });
+
+
 
         //INITIALIZE PREFERENCES - THESE ARE USED FOR SESSION PURPOSES
-        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+                sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
@@ -341,4 +371,29 @@ public class MainActivity extends AppCompatActivity
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
+
+    private void readData(final FirestoreCallback firestoreCallback){
+
+        itemRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(DocumentSnapshot documentSnapshot : task.getResult()){
+                        String itemTitle = documentSnapshot.getString("title");
+                        itemList.add(itemTitle);
+                    }
+                 firestoreCallback.onCallback(itemList);
+                } else {
+                    Log.d("MainActivity", "Error getting document: ", task.getException());
+                }
+            }
+        });
+
+
+    }
+
+    private interface FirestoreCallback{
+        void onCallback(List<String> list);
+    }
+
 }

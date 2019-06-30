@@ -30,6 +30,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
+
 public class ArticleActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ArrayList<Favorites> favorites = new ArrayList<Favorites>();
