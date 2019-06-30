@@ -32,6 +32,7 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter2;
 
     private ArrayList<NewsArticle> newsArticles = new ArrayList<NewsArticle>();
+    private ArrayList<NewsArticle> temp = new ArrayList<NewsArticle>();
 
     private ViewFavoritesAdapter vpAdapter;
     private ViewPager viewFavorites;
@@ -56,12 +57,13 @@ public class SearchActivity extends AppCompatActivity {
         db = new DatabaseHelper(this);
         newsArticles =  db.getNewsArticles();
 
-        String[] dbArticles = new String[newsArticles.size()];
-        for(int i = 0; i < newsArticles.size(); i++){
-            dbArticles[i] = newsArticles.get(i).getTitle();
-        }
+//        String[] dbArticles = new String[newsArticles.size()];
+//        for(int i = 0; i < newsArticles.size(); i++){
+//            dbArticles[i] = newsArticles.get(i).getTitle();
+//        }
 
         ArrayList<String> titles = new ArrayList<String>();
+
         for(NewsArticle n : newsArticles){
             titles.add(n.getTitle());
         }
@@ -83,6 +85,26 @@ public class SearchActivity extends AppCompatActivity {
                 titles
         );
         search_articles.setAdapter(adapter);
+
+        search_articles.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
+                System.out.println("\nID Search:" + id);
+                db = new DatabaseHelper(getApplicationContext());
+
+                //ArrayList<NewsArticle>  newsArticles = new ArrayList<NewsArticle>();
+                // System.out.println("\n Selektovan kategorija KLIKNUTO-> " + db.findCategoryById(position).getTitle());
+
+                Intent showArticleActivity = new Intent(view.getContext(), ArticleActivity.class);
+                int newsArticleId = newsArticles.get(position).getId();
+                NewsArticle newsArticle = db.findNewsArticleById(newsArticleId);
+
+                showArticleActivity.putExtra("newsArticle", newsArticle);
+
+
+                startActivity(showArticleActivity);
+            }
+        });
 
 
 
@@ -133,10 +155,26 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                newText=newText.toLowerCase();
                 adapter.getFilter().filter(newText);
 
+                temp = new ArrayList<NewsArticle>();
+                for(NewsArticle n: newsArticles){
+                    String[] words = n.getTitle().split(" ");
+                    for(String s: words){
+                        s=s.toLowerCase();
+                        if(s.startsWith(newText)){
+                            temp.add(n);
+                            break;
+                         }
+
+                    }
+                }
+                newsArticles = temp;
                 return false;
             }
+
+
         });
 
         return super.onCreateOptionsMenu(menu);
