@@ -47,6 +47,8 @@ public class EditFragmentAdmin extends AppCompatActivity {
                 if(!item.equals("")){
                     mDatabaseHelper.updateName(item,selectedID,selectedName);
                 }
+                Intent registerIntent = new Intent(getApplicationContext(), AdminActivity.class);
+                startActivity(registerIntent);
                 }
 
         });

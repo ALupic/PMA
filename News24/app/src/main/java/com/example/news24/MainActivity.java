@@ -347,8 +347,15 @@ public class MainActivity extends AppCompatActivity
         menu2.add("Control panel").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Intent adminIntent = new Intent(MainActivity.this, AdminActivity.class);
-                startActivity(adminIntent);
+                if(sharedPreferences.getString("username","").equals("") || sharedPreferences.getInt("type",0) !=1 ){
+
+                    Toast.makeText(getApplicationContext(), "Only for Admin", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    Intent adminIntent = new Intent(MainActivity.this, AdminActivity.class);
+                    startActivity(adminIntent);
+                }
                 return false;
             }
         });

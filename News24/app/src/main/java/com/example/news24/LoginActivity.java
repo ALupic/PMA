@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onClick(View view){
                             String user = usernameEditText.getText().toString().trim();
                             String pwd = passwordEditText.getText().toString().trim();
+                            int type = 0;
                             //Boolean res = db.checkUser(user, pwd);
                             Boolean res = false;
 
@@ -105,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if(u.getUsername().equals(user) && u.getPassword().equals(pwd)){
                                     Log.d("LoginActivityTAG", "Complete!");
                                     res = true;
+                                    type = u.getType();
                                     break;
                                 }else{
                                     Log.d("LoginActivityTAG", "Wrong!");
@@ -121,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
                                 editor.putString("username", user); //SET SESSION FOR USER
+                                editor.putInt("type",type);
                                 editor.commit();
 
                                 //db.close();

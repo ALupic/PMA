@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO registeruser VALUES ('isidora', 'isidora', 0, 1)");
 
         //INSERT NEWS ARTICLES
-        db.execSQL("INSERT INTO newsarticle VALUES(1, 'Politics', 'Brexit: Donald Tusk suggests \"flexible\" delay of up to a year', " +
+        db.execSQL("INSERT INTO newsarticle VALUES(1, 'Politics', 'Brexit: Donald Tusk suggests flexible delay of up to a year', " +
                 "'article1', " +
                 "'European Council president Donald Tusk says the EU should consider offering the UK a \"flexible\" delay to Brexit of up to a year, with the option of leaving earlier if a deal is ratified.'," +
                 "250, 2450, 50.8143, 4.4122)");
@@ -59,12 +59,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "'The majority of Icelanders believe in, or at least refuse to the deny the existence of elves, trolls, and other hidden beings. Cut off from the rest of the world for centuries, Icelanders developed a rich storytelling tradition and stories about elves and hidden people are still part of their heritage today.'," +
                 "90, 17, 64.9631, -19.0208)");
 
-        db.execSQL("INSERT INTO newsarticle VALUES(4, 'Politics', 'Donald Trump''s state visit to the UK set for 3 June', " +
+        db.execSQL("INSERT INTO newsarticle VALUES(4, 'Politics', 'Donald Trumps state visit to the UK set for 3 June', " +
                 "'article4', " +
                 "'US President Donald Trump will make a three-day state visit to the UK from 3 to 5 June, Buckingham Palace has announced.',"+
                 "540, 874, 38.8977, -77.0365)");
 
-        db.execSQL("INSERT INTO newsarticle VALUES(5, 'Entertainment', 'Britney Spears tells fans ''all is well'' after #FreeBritney campaign', " +
+        db.execSQL("INSERT INTO newsarticle VALUES(5, 'Entertainment', 'Britney Spears tells fans all is well after #FreeBritney campaign', " +
                 "'article5', " +
                 "'Britney Spears has reassured fans over her wellbeing following internet speculation about her safety.\n" +
                 "\n" +
@@ -95,14 +95,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "'US Treasury Secretary Steven Mnuchin has made calls to the heads of the country''s six largest banks, in an unusual move aimed at reassuring investors after big falls in US stocks.'," +
                 "276, 67, 38.5354, -77.2300)");
 
-        db.execSQL("INSERT INTO newsarticle VALUES(10, 'Sport', 'Novak Djokovic''s seven Melbourne titles in pictures', " +
+        db.execSQL("INSERT INTO newsarticle VALUES(10, 'Sport', 'Novak Djokovic seven Melbourne titles in pictures', " +
                 "'article10', " +
                 "'After Novak Djokovic claims a historic seventh title at the Australian Open, News takes a look at his successes over the years.\n" +
                 "\n" +
                 "The Serb''s 6-3 6-2 6-3 victory over great rival Rafael Nadal in Sunday''s Melbourne showpiece took him clear of six-time men''s winners Roy Emerson and Roger Federer.'," +
                 "674, 197, -37.8227, 144.9801)");
 
-        db.execSQL("INSERT INTO newsarticle VALUES(11, 'Sport', 'Irish Open: Ryder Cup star Ian Poulter to compete at Lahinch', " +
+        db.execSQL("INSERT INTO newsarticle VALUES(11, 'Sport', 'Irish Open Ryder Cup star Ian Poulter to compete at Lahinch', " +
                 "'article11', " +
                 "'Ian Poulter is the latest high-profile European Tour player to commit to taking part in the 2019 Irish Open.\n" +
                 "\n" +
@@ -114,7 +114,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "'Detailed information about more than 540 million Facebook users was left publicly viewable for months, a security firm has found.'," +
                 "157, 244, 37.4848, -122.1484)");
 
-        db.execSQL("INSERT INTO newsarticle VALUES(13, 'Travel', 'Can this ''lost'' tribe save the world?', " +
+        db.execSQL("INSERT INTO newsarticle VALUES(13, 'Travel', 'Can this lost tribe save the world?', " +
                 "'article13', " +
                 "'The hidden people of the Sierra Nevada de Santa Marta mountains have emerged from centuries of isolation to help save the world from climate change.'," +
                 "174, 21, 10.8292, -73.6923)");
@@ -133,7 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "The scientists are creating systems that can learn for themselves and be able to operate in the home, the workplace and even on the sports field.'," +
                 "378, 67, 31.96860, -99.90181)");
 
-        db.execSQL("INSERT INTO newsarticle VALUES(16, 'Business', 'Germany''s economy: Should we be worried?', " +
+        db.execSQL("INSERT INTO newsarticle VALUES(16, 'Business', 'Germanys economy: Should we be worried?', " +
                 "'article16', " +
                 "'There''s no question that the German economy has hit a difficult patch. The widest measure of economic activity, gross domestic product (GDP), declined in the third quarter of last year by 0.2% and failed to grow in the following three months.'," +
                 "140, 29, 52.52001, 13.40495)");
@@ -671,10 +671,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " AND " + "title" + " = '" + name + "'";
         db.execSQL(query);
     }
-    public boolean addArticle(String item1) {
+    public boolean addArticle(String item1, String content, String category,String lat, String longg) {
         SQLiteDatabase db = this.getWritableDatabase();
+
+        Float latNbr= Float.parseFloat(lat);
+        Float longNbr= Float.parseFloat(longg);
         ContentValues contentValues = new ContentValues();
         contentValues.put("title", item1);
+         contentValues.put("category", category);
+         contentValues.put("image", "news_large");
+         contentValues.put("content", content);
+         contentValues.put("likes", 0);
+         contentValues.put("dislikes", 0);
+         contentValues.put("lat", latNbr);
+         contentValues.put("long", longNbr);
 
         long result = db.insert("newsarticle", null, contentValues);
 
@@ -713,12 +723,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public Cursor getCommentID(String name){
 
-    SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
 
-    String query = "SELECT " + "id" + " FROM " + "comment" +
-            " WHERE " + "content" + " = '" + name + "'";
-    Cursor data = db.rawQuery(query, null);
-    return data;
+        String query = "SELECT " + "id" + " FROM " + "comment" +
+                " WHERE " + "content" + " = '" + name + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
     }
     public void deleteComment(int id, String name){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -728,3 +738,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 }
+
+
+//
+//
+
+
