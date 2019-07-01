@@ -59,6 +59,8 @@ public class EditFragmentArticleAdmin extends AppCompatActivity {
             public void onClick(View view) {
                 mDatabaseHelper.deleteNameArticle(selectedID,selectedName);
                 editable_item.setText("");
+                Intent registerIntent = new Intent(getApplicationContext(), AdminActivity.class);
+                startActivity(registerIntent);
             }
         });
 

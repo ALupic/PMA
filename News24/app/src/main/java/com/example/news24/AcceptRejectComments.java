@@ -53,6 +53,8 @@ public class AcceptRejectComments extends AppCompatActivity {
             public void onClick(View view) {
                 mDatabaseHelper.deleteComment(selectedID,selectedName);
                 editable_item.setText("");
+                Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+                startActivity(intent);
             }
         });
 
