@@ -233,6 +233,12 @@ public class MainActivity extends AppCompatActivity
                 Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(registerIntent);
                 break;
+
+
+            case R.id.option_about:
+                Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(aboutIntent);
+                break;
         }
 
 //        if(id == R.id.option_login){
